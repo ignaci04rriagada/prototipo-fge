@@ -1,0 +1,15 @@
+// 1. ABSTRACTS (Tokens y Mixins)
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// 2. BOOTSTRAP 5.3 (Grilla Desacoplada desde node_modules)
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/bootstrap/scss/root';
+@import '../../node_modules/bootstrap/scss/reboot';
+@import '../../node_modules/bootstrap/scss/containers';
+@import '../../node_modules/bootstrap/scss/grid';
+
+// 3. COMPONENTES (Iremos agregando tus átomos, moléculas u organismos aquí)
