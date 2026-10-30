@@ -1,0 +1,234 @@
+/* ==========================================================================
+   FUNDACIÓN GESTIONAR ESPERANZAS - SISTEMA DE ESTILOS (BEM)
+   ==========================================================================
+   TABLA DE CONTENIDOS:
+   
+   1. SETTINGS & VARIABLES
+      - Custom Properties / Design Tokens (:root)
+      
+   2. GENERICS & RESETS
+      - Normalización y ajustes globales
+      
+   3. BASE & ELEMENTS
+      - Tipografía global
+      - Enlaces y estados generales
+      
+   4. ATOMS (Átomos)
+      - .btn-fge (Botones principales y variantes)
+      - .badge-fge (Etiquetas y badges)
+      
+   5. MOLECULES (Moléculas)
+      - .card-fge (Tarjetas de proyectos)
+      - .testimonial-fge (Citas y testimonios)
+      
+   6. ORGANISMS (Organismos)
+      - .header-fge (Navegación / Navbar)
+      - .hero-fge (Sección principal)
+      - .projects-grid-fge (Grilla de proyectos)
+      - .footer-fge (Pie de página)
+      
+   7. UTILITIES & OVERRIDES
+      - Clases auxiliares puntuales
+      - Ajustes sobre Bootstrap 5.3
+   ========================================================================== */
+
+/* ==========================================================================
+   1. SETTINGS & VARIABLES
+   ========================================================================== */
+
+:root {
+  /* -----------------------------------------
+     A. Sistema de Colores (Primitivos)
+  -----------------------------------------------*/
+  /* Color Primario / Marca (30% de uso) */
+  --fge-color-purple-base: #4c4688;
+  --fge-color-purple-700: #423c76;
+  --fge-color-purple-800: #383165;
+  --fge-color-purple-850: #2f2753;
+  --fge-color-purple-900: #251c42;
+  --fge-color-purple-950: #1b1230;
+
+  /* Colores Secundarios / Acento (Paleta del Isotipo) */
+  --fge-color-cyan-base: #1baac1;
+  --fge-color-green-base: #199d6b;
+  --fge-color-pink-base: #ff2471;
+  --fge-color-yellow-base: #ffc04c;
+  --fge-color-lime-base: #5da430;
+
+  /* Neutrales */
+  --fge-color-neutral-100: #fafafa;
+  --fge-color-neutral-400: #a09fa2;
+  --fge-color-neutral-600: #706e78;
+  --fge-color-neutral-900: #1a1a1a;
+  --fge-color-white: #ffffff;
+
+  /* -----------------------------------------
+     B. Tokens de Color - Semántico / Funcional 
+  -----------------------------------------------*/
+  /* Marca & Identidad */
+  --fge-color-brand-primary: var(--fge-color-purple-base);
+  --fge-color-brand-hover: var(--fge-color-purple-700);
+  --fge-color-brand-dark: var(--fge-color-purple-950);
+
+  /* Superficies & Fondos */
+  --fge-color-bg-main: var(--fge-color-white);
+  --fge-color-bg-surface: var(--fge-color-neutral-100);
+  --fge-color-bg-accent-cyan: var(--fge-color-cyan-base);
+  --fge-color-bg-accent-green: var(--fge-color-green-base);
+
+  /* Textos & Iconografía */
+  --fge-color-text-main: var(--fge-color-neutral-900);
+  --fge-color-text-muted: var(--fge-color-neutral-600);
+  --fge-color-text-inverse: var(--fge-color-white);
+
+  /* Acciones & Destacados (CTA / Botones) */
+  --fge-color-action-primary: var(--fge-color-pink-base);
+  --fge-color-action-donate: var(--fge-color-yellow-base);
+  --fge-color-border-subtle: var(--fge-color-neutral-400);
+
+  /* -----------------------------------------
+     C. Tipografía (Envolventa + Lato)
+  -----------------------------------------------*/
+  /* Familias Tipográficas del Manual de Marca */
+  --fge-font-family-headings: 'Envolventa', sans-serif; /* Para Títulos y Destacados */
+  --fge-font-family-base: 'Lato', sans-serif; /* Para Textos / Cuerpo */
+
+  /* Escala Tipográfica (Minor Third - Base 16px) */
+  --fge-font-size-sm: 0.833rem; /* ~13.3px */
+  --fge-font-size-base: 1rem; /*  16px   */
+  --fge-font-size-lg: 1.2rem; /* ~19.2px */
+  --fge-font-size-xl: 1.44rem; /* ~23px   */
+  --fge-font-size-2xl: 1.728rem; /* ~27.6px */
+  --fge-font-size-3xl: 2.074rem; /* ~33.2px */
+  --fge-font-size-4xl: 2.488rem; /* ~39.8px */
+  --fge-font-size-5xl: 2.986rem; /* ~47.8px */
+
+  /* Pesos y Alturas de Línea */
+  --fge-font-weight-regular: 400;
+  --fge-font-weight-bold: 700;
+  --fge-line-height-tight: 1.2;
+  --fge-line-height-base: 1.5;
+  /* -----------------------------------------
+     D. Espaciado y Geometría (Escala de 8px / Rem)
+  -----------------------------------------------*/
+  --fge-space-3xs: 0.125rem; /* 2px  */
+  --fge-space-2xs: 0.25rem; /* 4px  */
+  --fge-space-xs: 0.5rem; /* 8px  */
+  --fge-space-sm: 0.75rem; /* 12px */
+  --fge-space-md: 1rem; /* 16px */
+  --fge-space-lg: 1.5rem; /* 24px */
+  --fge-space-xl: 2rem; /* 32px */
+  --fge-space-2xl: 3rem; /* 48px */
+  --fge-space-3xl: 4.5rem; /* 72px */
+
+  /* Radios de Curvatura (Bordes) */
+  --fge-radius-sm: 0.25rem; /* 4px  */
+  --fge-radius-md: 0.5rem; /* 8px  */
+  --fge-radius-lg: 1rem; /* 16px */
+  --fge-radius-pill: 50rem; /* Redondeado completo */
+
+  /* Transiciones y Sombras */
+  --fge-transition-base: all 0.3s ease-in-out;
+  --fge-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --fge-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   2. GENERICS & RESETS
+   ========================================================================== */
+/* Estilos globales si aplica */
+
+/* ==========================================================================
+   3. BASE & ELEMENTS
+   ========================================================================== */
+
+/* Configuración del Cuerpo (Lato) */
+body {
+  font-family: var(--fge-font-family-base);
+  font-size: var(--fge-font-size-base);
+  line-height: var(--fge-line-height-base);
+  color: var(--fge-color-text-main);
+  background-color: var(--fge-color-bg-main);
+}
+
+/* Regla Base para Encabezados (Envolventa) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fge-font-family-headings);
+  font-weight: var(--fge-font-weight-bold);
+  line-height: var(--fge-line-height-tight);
+  color: var(--fge-color-brand-primary);
+  margin-bottom: var(--fge-space-sm);
+}
+
+/* Escala Jerárquica Aplicada a Etiquetas HTML */
+h1 {
+  font-size: var(--fge-font-size-5xl);
+}
+h2 {
+  font-size: var(--fge-font-size-4xl);
+}
+h3 {
+  font-size: var(--fge-font-size-3xl);
+}
+h4 {
+  font-size: var(--fge-font-size-2xl);
+}
+h5 {
+  font-size: var(--fge-font-size-xl);
+}
+h6 {
+  font-size: var(--fge-font-size-lg);
+}
+
+/* Párrafos y Enlaces Base */
+p {
+  margin-bottom: var(--fge-space-md);
+}
+
+a {
+  color: var(--fge-color-brand-primary);
+  text-decoration: none;
+  transition: var(--fge-transition-base);
+}
+
+a:hover {
+  color: var(--fge-color-brand-hover);
+}
+
+/* ==========================================================================
+   7. UTILITIES & OVERRIDES (Sobrescritura Grilla Figma: Margen 80px / Gutter 24px)
+   ========================================================================== */
+
+/* 1. Definición de Variables de Grilla */
+:root {
+  --fge-grid-gutter: 1.5rem; /* 24px en Rem */
+  --fge-grid-margin-desktop: 5rem; /* 80px en Rem */
+  --fge-grid-margin-mobile: 1rem; /* 16px para adaptar a pantallas chicas */
+}
+
+/* 2. Ajuste de Contenedores y Filas */
+.container,
+.container-fluid {
+  --bs-gutter-x: var(--fge-grid-gutter);
+  padding-right: var(--fge-grid-margin-mobile);
+  padding-left: var(--fge-grid-margin-mobile);
+  max-width: 100%;
+}
+
+.row {
+  --bs-gutter-x: var(--fge-grid-gutter);
+}
+
+/* 3. Ajuste Responsive para Escritorio (Márgenes de 80px) */
+@media (min-width: 992px) {
+  .container,
+  .container-fluid {
+    padding-right: var(--fge-grid-margin-desktop); /* 80px */
+    padding-left: var(--fge-grid-margin-desktop); /* 80px */
+  }
+}
