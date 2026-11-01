@@ -4,282 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundación Gestionar Esperanzas - Prototipo V0.2.0</title>
+    <title>Fundación Gestionar Esperanzas</title>
 
-    <!-- Google Fonts para cargar Envolventa (fallback) y Lato -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@700&display=swap"
-        rel="stylesheet">
-
-    <!-- Bootstrap 5.3 CSS Base -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Tu Hoja de Estilos Principal BEM -->
+    <!-- Hoja de estilos principal con tokens y átomos -->
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- Estilos de componentes de prueba (Atoms/Molecules) usando tus CSS Tokens -->
-    <style>
-    /* ATOM: Botones (.btn-fge) */
-    .btn-fge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--fge-space-xs);
-        padding: var(--fge-space-sm) var(--fge-space-lg);
-        font-family: var(--fge-font-family-base);
-        font-size: var(--fge-font-size-base);
-        font-weight: var(--fge-font-weight-bold);
-        border-radius: var(--fge-radius-md);
-        border: 2px solid transparent;
-        transition: var(--fge-transition-base);
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .btn-fge--primary {
-        background-color: var(--fge-color-brand-primary);
-        color: var(--fge-color-text-inverse);
-    }
-
-    .btn-fge--primary:hover {
-        background-color: var(--fge-color-brand-hover);
-        color: var(--fge-color-text-inverse);
-    }
-
-    .btn-fge--action {
-        background-color: var(--fge-color-action-primary);
-        color: var(--fge-color-text-inverse);
-    }
-
-    .btn-fge--action:hover {
-        opacity: 0.9;
-        color: var(--fge-color-text-inverse);
-    }
-
-    .btn-fge--donate {
-        background-color: var(--fge-color-action-donate);
-        color: var(--fge-color-text-main);
-    }
-
-    .btn-fge--donate:hover {
-        filter: brightness(0.95);
-        color: var(--fge-color-text-main);
-    }
-
-    .btn-fge--outline {
-        background-color: transparent;
-        border-color: var(--fge-color-brand-primary);
-        color: var(--fge-color-brand-primary);
-    }
-
-    .btn-fge--outline:hover {
-        background-color: var(--fge-color-brand-primary);
-        color: var(--fge-color-text-inverse);
-    }
-
-    /* MOLECULE: Tarjeta de Proyectos (.card-fge) */
-    .card-fge {
-        background-color: var(--fge-color-bg-surface);
-        border-radius: var(--fge-radius-lg);
-        padding: var(--fge-space-lg);
-        box-shadow: var(--fge-shadow-sm);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: var(--fge-transition-base);
-        border: 1px solid var(--fge-color-border-subtle);
-    }
-
-    .card-fge:hover {
-        box-shadow: var(--fge-shadow-md);
-        transform: translateY(-4px);
-    }
-
-    .card-fge__tag {
-        display: inline-block;
-        padding: var(--fge-space-2xs) var(--fge-space-xs);
-        border-radius: var(--fge-radius-sm);
-        font-size: var(--fge-font-size-sm);
-        font-weight: var(--fge-font-weight-bold);
-        color: var(--fge-color-text-inverse);
-        margin-bottom: var(--fge-space-xs);
-        align-self: flex-start;
-    }
-
-    .card-fge__tag--cyan {
-        background-color: var(--fge-color-cyan-base);
-    }
-
-    .card-fge__tag--green {
-        background-color: var(--fge-color-green-base);
-        border-radius: var(--fge-radius-pill);
-    }
-
-    .card-fge__title {
-        font-size: var(--fge-font-size-xl);
-        color: var(--fge-color-brand-primary);
-        margin-bottom: var(--fge-space-xs);
-    }
-
-    .card-fge__text {
-        color: var(--fge-color-text-muted);
-        font-size: var(--fge-font-size-base);
-    }
-
-    /* ORGANISM: Hero section (.hero-fge) */
-    .hero-fge {
-        background-color: var(--fge-color-bg-surface);
-        padding: var(--fge-space-3xl) 0;
-        border-bottom: 2px solid var(--fge-color-border-subtle);
-        margin-bottom: var(--fge-space-2xl);
-    }
-
-    /* Navbar Brand Override */
-    .header-fge {
-        background-color: var(--fge-color-white);
-        box-shadow: var(--fge-shadow-sm);
-        padding: var(--fge-space-md) 0;
-    }
-    </style>
 </head>
 
 <body>
 
-    <!-- ORGANISMO: Header / Navbar -->
-    <header class="header-fge sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center justify-content-between">
-                <a href="#" class="d-flex align-items-center text-decoration-none">
-                    <i class="bi bi-heart-pulse-fill text-danger fs-3 me-2"></i>
-                    <span class="h4 mb-0" style="color: var(--fge-color-brand-primary);">
-                        Fundación Gestionar Esperanzas
-                    </span>
-                </a>
-                <div class="d-none d-md-flex align-items-center gap-3">
-                    <a href="#proyectos" class="fw-bold">Proyectos</a>
-                    <a href="#nosotros" class="fw-bold">Quiénes Somos</a>
-                    <a href="#" class="btn-fge btn-fge--donate">
-                        <i class="bi bi-heart-fill"></i> Doná Online
-                    </a>
+    <!-- ORGANISMO: Header / Navbar principal -->
+    <header class="header-fge border-bottom">
+
+        <!-- Barra Superior (Topbar) para País e Info rápida -->
+        <div class="topbar-fge bg-light py-1 border-bottom">
+            <div class="container-fluid px-lg-5">
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <!-- Selector de País (Átomo con BI Icons) -->
+                    <div class="country-dropdown-wrapper position-relative">
+                        <button class="country-select-fge" type="button" id="countrySelector" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-globe icon-fge"></i>
+                            <span>Chile</span>
+                            <i class="bi bi-chevron-down country-select-fge__icon"></i>
+                        </button>
+                        <ul class="dropdown-menu shadow-sm border-0 mt-1" aria-labelledby="countrySelector">
+                            <li><a class="dropdown-item" href="#">Chile</a></li>
+                            <li><a class="dropdown-item" href="#">Argentina</a></li>
+                            <li><a class="dropdown-item" href="#">Perú</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Redes o contacto rápido (Opcional) -->
+                    <div class="d-none d-md-flex gap-3 align-items-center text-muted fs-6">
+                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                    </div>
+
                 </div>
             </div>
         </div>
+
+        <!-- Navegación Principal -->
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="container-fluid px-lg-5">
+
+                <!-- Logo FGE -->
+                <a class="navbar-brand fw-bold text-uppercase tracking-wide" href="#"
+                    style="color: var(--fge-color-brand-primary);">
+                    <i class="bi bi-heart-pulse-fill me-1" style="color: var(--fge-color-action-primary);"></i>
+                    FGE Esperanza
+                </a>
+
+                <!-- Botón Hamburger para Móviles -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarFGE" aria-controls="navbarFGE" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Menú de Enlaces y CTAs -->
+                <div class="collapse navbar-collapse" id="navbarFGE">
+
+                    <!-- Links Centrales (Átomos .nav-link-fge) -->
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                        <li class="nav-item">
+                            <a class="nav-link-fge nav-link-fge--active" href="#">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-fge" href="#">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-fge" href="#">Proyectos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-fge" href="#">Transparencia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-fge" href="#">Contacto</a>
+                        </li>
+                    </ul>
+
+                    <!-- Botones de Acción (Átomos .btn-fge) -->
+                    <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                        <a href="#" class="btn-fge btn-fge--secondary">
+                            Voluntariado
+                        </a>
+                        <a href="#" class="btn-fge btn-fge--primary">
+                            <i class="bi bi-heart-fill icon-fge"></i>
+                            Donar
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
     </header>
 
-    <!-- ORGANISMO: Hero Principal -->
-    <section class="hero-fge">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <h1>Fortalecemos el desarrollo comunitario</h1>
-                    <p class="lead text-muted">
-                        Acompañamos a organizaciones sociales en Argentina, Chile y Uruguay brindando herramientas para
-                        su crecimiento sostenible y mejorando la calidad de vida en contextos vulnerables.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="#" class="btn-fge btn-fge--action">
-                            <i class="bi bi-hand-index-thumb-fill"></i> Sumate como voluntario
-                        </a>
-                        <a href="#" class="btn-fge btn-fge--outline">
-                            <i class="bi bi-file-earmark-pdf-fill"></i> Conoce la guía
-                        </a>
-                    </div>
+    <!-- Contenido de prueba de la grilla -->
+    <main class="py-5">
+        <div class="container-fluid px-lg-5">
+            <div class="row">
+                <div class="col-12">
+                    <span class="badge-fge mb-3">MAMP Prototype</span>
+                    <h1 style="font-family: var(--fge-font-family-heading); color: var(--fge-color-brand-primary);">
+                        Fundación Gestionar Esperanzas
+                    </h1>
+                    <p class="lead">Entorno modular PHP en ejecución previa al desarrollo de WordPress.</p>
                 </div>
-                <div class="col-lg-5 mt-4 mt-lg-0">
-                    <div class="p-4 text-center rounded-4"
-                        style="background-color: var(--fge-color-purple-base); color: white;">
-                        <i class="bi bi-people-fill display-1"></i>
-                        <h3 class="text-white mt-3">+500 Niños y niñas</h3>
-                        <p class="mb-0 text-white-50">Impactados positivamente mediante nuestros programas solidarios en
-                            comedores de la red.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ORGANISMO: Grilla de Proyectos Destacados -->
-    <main class="container mb-5" id="proyectos">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2>Proyectos y Programas Activos</h2>
-                <p class="text-muted">Conoce algunas de las iniciativas que estamos impulsando junto a las comunidades.
-                </p>
-            </div>
-        </div>
-
-        <!-- Demostración de la grilla de Figma con 24px de gutter -->
-        <div class="row g-4">
-            <!-- Proyecto 1 -->
-            <div class="col-md-6 col-lg-4">
-                <article class="card-fge">
-                    <div>
-                        <span class="card-fge__tag card-fge__tag--green">Sostenibilidad</span>
-                        <h3 class="card-fge__title">Reciclado y Medio Ambiente</h3>
-                        <p class="card-fge__text">
-                            Transformamos papel en desuso en insumos esenciales para el desarrollo de infraestructuras
-                            comunitarias en los comedores de la red.
-                        </p>
-                    </div>
-                    <a href="#" class="btn-fge btn-fge--primary mt-3">
-                        Ver detalle <i class="bi bi-arrow-right"></i>
-                    </a>
-                </article>
-            </div>
-
-            <!-- Proyecto 2 -->
-            <div class="col-md-6 col-lg-4">
-                <article class="card-fge">
-                    <div>
-                        <span class="card-fge__tag card-fge__tag--cyan">Infancias</span>
-                        <h3 class="card-fge__title">Día de las Infancias Inolvidable</h3>
-                        <p class="card-fge__text">
-                            Llevamos alegría, juegos y alimentos para celebrar a más de 500 niños y niñas participantes
-                            de nuestros talleres de arte e inclusión.
-                        </p>
-                    </div>
-                    <a href="#" class="btn-fge btn-fge--primary mt-3">
-                        Ver detalle <i class="bi bi-arrow-right"></i>
-                    </a>
-                </article>
-            </div>
-
-            <!-- Proyecto 3 -->
-            <div class="col-md-6 col-lg-4">
-                <article class="card-fge">
-                    <div>
-                        <span class="card-fge__tag card-fge__tag--green">Cultura</span>
-                        <h3 class="card-fge__title">Subasta "Pinceladas de Futuro"</h3>
-                        <p class="card-fge__text">
-                            Un encuentro donde el arte se convierte en puente de oportunidades mediante la exposición de
-                            obras hechas por chicos en comedores.
-                        </p>
-                    </div>
-                    <a href="#" class="btn-fge btn-fge--primary mt-3">
-                        Ver detalle <i class="bi bi-arrow-right"></i>
-                    </a>
-                </article>
             </div>
         </div>
     </main>
 
-    <!-- ORGANISMO: Footer -->
-    <footer class="py-4 mt-5"
-        style="background-color: var(--fge-color-brand-dark); color: var(--fge-color-neutral-400);">
-        <div class="container text-center">
-            <p class="mb-1">Fundación Gestionar Esperanzas &copy; 2025 - Todos los derechos reservados.</p>
-            <small>Prototipo en construcción | BEM + Tokens CSS + Bootstrap 5.3 Override</small>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS (opcional si usas componentes interactivos) -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap 5.3 JS Bundle con Popper (Necesario para el dropdown del selector de país) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

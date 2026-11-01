@@ -31,7 +31,37 @@
       - Clases auxiliares puntuales
       - Ajustes sobre Bootstrap 5.3
    ========================================================================== */
+/* ==========================================================================
+   FUENTES LOCALES (@font-face)
+   ========================================================================== */
 
+/* --- 1. Envolventa (Encabezados) --- */
+@font-face {
+  font-family: 'Envolventa';
+  src: url('../fonts/envolventa/Envolventa-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap; /* Evita parpadeos de texto invisible mientras carga */
+}
+
+/* --- 2. Lato (Cuerpo de texto) --- */
+/* Regular (400) */
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* ==========================================================================
    1. SETTINGS & VARIABLES
    ========================================================================== */
@@ -71,7 +101,7 @@
   --fge-color-brand-dark: var(--fge-color-purple-950);
 
   /* Superficies & Fondos */
-  --fge-color-bg-main: var(--fge-color-white);
+  --fge-color-bg-main: var(--fge-color-neutral-100);
   --fge-color-bg-surface: var(--fge-color-neutral-100);
   --fge-color-bg-accent-cyan: var(--fge-color-cyan-base);
   --fge-color-bg-accent-green: var(--fge-color-green-base);
@@ -83,7 +113,7 @@
 
   /* Acciones & Destacados (CTA / Botones) */
   --fge-color-action-primary: var(--fge-color-pink-base);
-  --fge-color-action-donate: var(--fge-color-yellow-base);
+  --fge-color-action-donate: var(--fge-color-pink-base);
   --fge-color-border-subtle: var(--fge-color-neutral-400);
 
   /* -----------------------------------------
@@ -157,8 +187,14 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  font-family: var(--fge-font-family-headings);
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--fge-font-family-headings) !important;
   font-weight: var(--fge-font-weight-bold);
   line-height: var(--fge-line-height-tight);
   color: var(--fge-color-brand-primary);
@@ -198,6 +234,147 @@ a {
 
 a:hover {
   color: var(--fge-color-brand-hover);
+}
+
+/* ==========================================================================
+   4. ATOMS
+   ========================================================================== */
+
+/* --- 4.1 BOTONES (.btn-fge) --- */
+.btn-fge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fge-space-xs, 8px);
+  padding: 12px 24px;
+  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: var(--fge-radius-md, 8px);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Botón Principal (CTA de Marca) */
+.btn-fge--primary {
+  background-color: var(--fge-color-action-primary, #ff2471);
+  color: #ffffff;
+}
+
+.btn-fge--primary:hover {
+  background-color: var(--fge-color-action-primary-hover, #d9004c);
+  color: #ffffff;
+}
+
+/* Botón Secundario (Outline / Acento) */
+.btn-fge--secondary {
+  background-color: transparent;
+  color: var(--fge-color-brand-primary, #4c4688);
+  border-color: var(--fge-color-brand-primary, #4c4688);
+}
+
+.btn-fge--secondary:hover {
+  background-color: var(--fge-color-brand-primary, #4c4688);
+  color: #ffffff;
+}
+
+/* --- 4.2 BADGES (.badge-fge) --- */
+.badge-fge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 50px;
+  background-color: var(--fge-color-accent-soft, #eef7f6);
+  color: var(--fge-color-brand-primary, #4c4688);
+}
+
+/* --- 4.3 LINKS DE NAVEGACIÓN (.nav-link-fge) --- */
+.nav-link-fge {
+  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fge-color-text-main, #2b2b2b);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.nav-link-fge:hover,
+.nav-link-fge--active {
+  color: var(--fge-color-action-primary, #ff2471);
+}
+
+/* Subrayado animado al pasar el cursor */
+.nav-link-fge::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--fge-color-action-primary, #ff2471);
+  transition: width 0.2s ease;
+}
+
+.nav-link-fge:hover::after,
+.nav-link-fge--active::after {
+  width: 100%;
+}
+
+/* --- 4.4 ÍCONOS (BOOTSTRAP ICONS) Y SELECTOR DE PAÍS --- */
+
+/* Estilo base para íconos de Bootstrap usados como átomos */
+.icon-fge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  line-height: 1;
+}
+
+/* Selector de País */
+.country-select-fge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fge-color-text-main, #2b2b2b);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--fge-radius-sm, 4px);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.country-select-fge:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--fge-color-action-primary, #ff2471);
+}
+
+/* Animación del chevron/flecha al desplegar */
+.country-select-fge__icon {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.country-select-fge[aria-expanded='true'] .country-select-fge__icon {
+  transform: rotate(180deg);
 }
 
 /* ==========================================================================
