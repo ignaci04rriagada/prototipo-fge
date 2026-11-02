@@ -7,7 +7,7 @@
       - Custom Properties / Design Tokens (:root)
       
    2. GENERICS & RESETS
-      - Normalización y ajustes globales
+      - Normalización, accesibilidad y foco global
       
    3. BASE & ELEMENTS
       - Tipografía global
@@ -31,6 +31,7 @@
       - Clases auxiliares puntuales
       - Ajustes sobre Bootstrap 5.3
    ========================================================================== */
+
 /* ==========================================================================
    FUENTES LOCALES (@font-face)
    ========================================================================== */
@@ -38,8 +39,8 @@
 /* --- 1. Envolventa (Encabezados) --- */
 @font-face {
   font-family: 'Envolventa';
-  src: url('../fonts/envolventa/Envolventa-Bold.woff') format('woff');
-  font-weight: 700;
+  src: url('../fonts/envolventa/Evolventa-Bold.woff') format('woff');
+  font-weight: bold;
   font-style: normal;
   font-display: swap; /* Evita parpadeos de texto invisible mientras carga */
 }
@@ -62,6 +63,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 /* ==========================================================================
    1. SETTINGS & VARIABLES
    ========================================================================== */
@@ -82,6 +84,7 @@
   --fge-color-cyan-base: #1baac1;
   --fge-color-green-base: #199d6b;
   --fge-color-pink-base: #ff2471;
+  --fge-color-pink-hover: #ff2471d8;
   --fge-color-yellow-base: #ffc04c;
   --fge-color-lime-base: #5da430;
 
@@ -113,6 +116,7 @@
 
   /* Acciones & Destacados (CTA / Botones) */
   --fge-color-action-primary: var(--fge-color-pink-base);
+  --fge-color-action-primary-hover: var(--fge-color-pink-hover);
   --fge-color-action-donate: var(--fge-color-pink-base);
   --fge-color-border-subtle: var(--fge-color-neutral-400);
 
@@ -138,6 +142,7 @@
   --fge-font-weight-bold: 700;
   --fge-line-height-tight: 1.2;
   --fge-line-height-base: 1.5;
+
   /* -----------------------------------------
      D. Espaciado y Geometría (Escala de 8px / Rem)
   -----------------------------------------------*/
@@ -164,9 +169,19 @@
 }
 
 /* ==========================================================================
-   2. GENERICS & RESETS
+   2. GENERICS & RESETS (Accesibilidad & WCAG 2.2)
    ========================================================================== */
-/* Estilos globales si aplica */
+
+/* Foco visible mejorado para navegación por teclado (WCAG 2.4.7 y 2.4.13) */
+a:focus-visible,
+button:focus-visible,
+.btn-fge:focus-visible,
+.country-select-fge:focus-visible,
+.nav-link-fge:focus-visible {
+  outline: 3px solid var(--fge-color-brand-primary);
+  outline-offset: 3px;
+  border-radius: var(--fge-radius-sm);
+}
 
 /* ==========================================================================
    3. BASE & ELEMENTS
@@ -181,7 +196,7 @@ body {
   background-color: var(--fge-color-bg-main);
 }
 
-/* Regla Base para Encabezados (Envolventa) */
+/* Regla Base para Encabezados (Envolventa) con Sobrescritura de Bootstrap */
 h1,
 h2,
 h3,
@@ -246,9 +261,10 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: var(--fge-space-xs, 8px);
-  padding: 12px 24px;
+  padding: var(--fge-space-sm) var(--fge-space-lg);
+  min-height: 48px;
   font-family: var(--fge-font-family-base, 'Lato', sans-serif);
-  font-size: 1rem;
+  font-size: var(--fge-font-size-base);
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
@@ -263,25 +279,25 @@ a:hover {
 
 /* Botón Principal (CTA de Marca) */
 .btn-fge--primary {
-  background-color: var(--fge-color-action-primary, #ff2471);
-  color: #ffffff;
+  background-color: var(--fge-color-action-primary);
+  color: var(--fge-color-white);
 }
 
 .btn-fge--primary:hover {
-  background-color: var(--fge-color-action-primary-hover, #d9004c);
-  color: #ffffff;
+  background-color: var(--fge-color-action-primary-hover);
+  color: var(--fge-color-white);
 }
 
 /* Botón Secundario (Outline / Acento) */
 .btn-fge--secondary {
   background-color: transparent;
-  color: var(--fge-color-brand-primary, #4c4688);
-  border-color: var(--fge-color-brand-primary, #4c4688);
+  color: var(--fge-color-brand-primary);
+  border-color: var(--fge-color-brand-primary);
 }
 
 .btn-fge--secondary:hover {
-  background-color: var(--fge-color-brand-primary, #4c4688);
-  color: #ffffff;
+  background-color: var(--fge-color-brand-primary);
+  color: var(--fge-color-white);
 }
 
 /* --- 4.2 BADGES (.badge-fge) --- */
@@ -306,13 +322,16 @@ a:hover {
   color: var(--fge-color-text-main, #2b2b2b);
   text-decoration: none;
   position: relative;
-  padding: 4px 0;
+  padding: 6px 4px;
+  min-height: 32px; /* Garantiza área táctil adecuada */
+  display: inline-flex;
+  align-items: center;
   transition: color 0.2s ease;
 }
 
 .nav-link-fge:hover,
 .nav-link-fge--active {
-  color: var(--fge-color-action-primary, #ff2471);
+  color: var(--fge-color-action-primary);
 }
 
 /* Subrayado animado al pasar el cursor */
@@ -323,7 +342,7 @@ a:hover {
   left: 0;
   width: 0%;
   height: 2px;
-  background-color: var(--fge-color-action-primary, #ff2471);
+  background-color: var(--fge-color-action-primary);
   transition: width 0.2s ease;
 }
 
@@ -351,11 +370,12 @@ a:hover {
   font-family: var(--fge-font-family-base, 'Lato', sans-serif);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--fge-color-text-main, #2b2b2b);
+  color: var(--fge-color-text-);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 6px 10px;
+  min-height: 36px; /* Garantiza área táctil (Target Size WCAG) */
   border-radius: var(--fge-radius-sm, 4px);
   transition:
     background-color 0.2s ease,
@@ -364,7 +384,7 @@ a:hover {
 
 .country-select-fge:hover {
   background-color: rgba(0, 0, 0, 0.05);
-  color: var(--fge-color-action-primary, #ff2471);
+  color: var(--fge-color-action-primary);
 }
 
 /* Animación del chevron/flecha al desplegar */
@@ -375,6 +395,125 @@ a:hover {
 
 .country-select-fge[aria-expanded='true'] .country-select-fge__icon {
   transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   6. ORGANISMS - Topbar (.topbar-fge)
+   ========================================================================== */
+
+.topbar-fge {
+  background-color: var(--fge-color-purple-950);
+  color: var(--fge-color-text-inverse);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: var(--fge-font-size-sm);
+  padding: var(--fge-space-2xs) 0;
+}
+
+.topbar-fge__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 2. MOLÉCULA: Selector de País (.country-dropdown-fge) */
+.country-dropdown-fge {
+  position: relative;
+}
+
+.country-dropdown-fge__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fge-space-xs);
+  padding: var(--fge-space-2xs) var(--fge-space-xs);
+  min-height: 36px;
+  font-family: var(--fge-font-family-base);
+  font-size: var(--fge-font-size-base);
+  font-weight: var(--fge-font-weight-regular);
+  color: var(--fge-color-text-inverse);
+  background: transparent;
+  border: none;
+  border-radius: var(--fge-radius-sm);
+  cursor: pointer;
+  transition: var(--fge-transition-base);
+}
+
+.country-dropdown-fge__toggle:hover {
+  color: var(--fge-color-action-primary);
+}
+
+.country-dropdown-fge__chevron {
+  font-size: var(--fge-font-size-sm);
+  transition: transform 0.2s ease;
+}
+
+.country-dropdown-fge__toggle[aria-expanded='true'] .country-dropdown-fge__chevron {
+  transform: rotate(180deg);
+}
+
+/* Modificación sobre el Dropdown Menu de Bootstrap */
+.country-dropdown-fge__menu {
+  background-color: var(--fge-color-bg-surface);
+  border: 1px solid var(--fge-color-border-subtle);
+  border-radius: var(--fge-radius-md);
+  box-shadow: var(--fge-shadow-md);
+  margin-top: var(--fge-space-2xs);
+  padding: var(--fge-space-2xs) 0;
+  min-width: 140px;
+}
+
+.country-dropdown-fge__item {
+  color: var(--fge-color-text-main);
+  font-size: var(--fge-font-size-base);
+  padding: var(--fge-space-xs) var(--fge-space-md);
+  transition: background-color 0.2s ease;
+}
+
+.country-dropdown-fge__item:hover,
+.country-dropdown-fge__item:focus {
+  background-color: var(--fge-color-action-primary);
+  color: var(--fge-color-neutral-100);
+}
+
+.country-dropdown-fge__item--active {
+  font-weight: var(--fge-font-weight-bold);
+  color: var(--fge-color-brand-primary);
+}
+
+/* 3. MOLÉCULA: Redes Sociales (.topbar-fge__socials) */
+.topbar-fge__socials {
+  display: none; /* Oculto en móvil por defecto */
+}
+
+@media (min-width: 768px) {
+  .topbar-fge__socials {
+    display: block;
+  }
+}
+
+.topbar-fge__social-list {
+  display: flex;
+  align-items: center;
+  gap: var(--fge-space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topbar-fge__social-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fge-font-size-xl);
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--fge-color-neutral-100);
+  border-radius: var(--fge-radius-pill);
+  transition: var(--fge-transition-base);
+}
+
+.topbar-fge__social-link:hover {
+  color: var(--fge-color-action-primary);
+  background-color: var(--fge-color-bg-surface);
 }
 
 /* ==========================================================================

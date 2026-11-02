@@ -20,32 +20,50 @@
     <!-- ORGANISMO: Header / Navbar principal -->
     <header class="header-fge border-bottom">
 
-        <!-- Barra Superior (Topbar) para País e Info rápida -->
-        <div class="topbar-fge bg-light py-1 border-bottom">
-            <div class="container-fluid px-lg-5">
-                <div class="d-flex justify-content-between align-items-center">
+        <!-- ORGANISMO: Topbar (.topbar-fge) -->
+        <div class="topbar-fge">
+            <div class="container-fluid">
+                <div class="topbar-fge__container">
 
-                    <!-- Selector de País (Átomo con BI Icons) -->
-                    <div class="country-dropdown-wrapper position-relative">
-                        <button class="country-select-fge" type="button" id="countrySelector" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="bi bi-globe icon-fge"></i>
-                            <span>Chile</span>
-                            <i class="bi bi-chevron-down country-select-fge__icon"></i>
+                    <!-- MOLÉCULA: Selector de País -->
+                    <div class="topbar-fge__country-selector country-dropdown-fge">
+                        <button class="country-dropdown-fge__toggle" type="button" id="countrySelector"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            aria-label="Seleccionar país (Actual: Chile)">
+                            <i class="bi bi-globe country-dropdown-fge__icon" aria-hidden="true"></i>
+                            <span class="country-dropdown-fge__label">Chile</span>
+                            <i class="bi bi-chevron-down country-dropdown-fge__chevron" aria-hidden="true"></i>
                         </button>
-                        <ul class="dropdown-menu shadow-sm border-0 mt-1" aria-labelledby="countrySelector">
-                            <li><a class="dropdown-item" href="#">Chile</a></li>
-                            <li><a class="dropdown-item" href="#">Argentina</a></li>
-                            <li><a class="dropdown-item" href="#">Perú</a></li>
+
+                        <!-- Menú Desplegable -->
+                        <ul class="dropdown-menu country-dropdown-fge__menu" aria-labelledby="countrySelector">
+                            <li><a class="dropdown-item country-dropdown-fge__item country-dropdown-fge__item--active"
+                                    href="#">Chile</a></li>
+                            <li><a class="dropdown-item country-dropdown-fge__item" href="#">Argentina</a></li>
+                            <li><a class="dropdown-item country-dropdown-fge__item" href="#">Perú</a></li>
                         </ul>
                     </div>
 
-                    <!-- Redes o contacto rápido (Opcional) -->
-                    <div class="d-none d-md-flex gap-3 align-items-center text-muted fs-6">
-                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-secondary text-decoration-none"><i class="bi bi-linkedin"></i></a>
-                    </div>
+                    <!-- MOLÉCULA: Redes Sociales -->
+                    <nav class="topbar-fge__socials" aria-label="Redes sociales de la fundación">
+                        <ul class="topbar-fge__social-list">
+                            <li class="topbar-fge__social-item">
+                                <a href="#" class="topbar-fge__social-link" aria-label="Visita nuestro Instagram">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="topbar-fge__social-item">
+                                <a href="#" class="topbar-fge__social-link" aria-label="Visita nuestro Facebook">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="topbar-fge__social-item">
+                                <a href="#" class="topbar-fge__social-link" aria-label="Visita nuestro LinkedIn">
+                                    <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
 
                 </div>
             </div>
