@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noticias - Fundación Gestionar Esperanzas</title>
+  
+  <!-- Bootstrap 5.3 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts (Helvetica Neue / Inter fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-dark: #1D1E3A;
+      --brand-navy: #2A295C;
+      --brand-footer: #4F4C8F;
+      --brand-accent: #E6007E;
+      --brand-accent-hover: #C8006E;
+      --brand-badge-blue: #0072BC;
+      --brand-badge-orange: #F58220;
+      --brand-badge-teal: #00A887;
+      --brand-gray-bg: #E5E7EB;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #374151;
+      background-color: #ffffff;
+    }
+
+    /* Clases de Identidad e Integración */
+    .bg-brand-dark { background-color: var(--brand-dark) !important; }
+    .bg-brand-navy { background-color: var(--brand-navy) !important; }
+    .text-brand-navy { color: var(--brand-navy) !important; }
+    .bg-brand-footer { background-color: var(--brand-footer) !important; }
+    .bg-brand-gray { background-color: var(--brand-gray-bg) !important; }
+
+    .btn-brand-accent {
+      background-color: var(--brand-accent);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-brand-accent:hover, .btn-brand-accent:focus {
+      background-color: var(--brand-accent-hover);
+      color: #ffffff;
+    }
+
+    /* Badges cromáticos */
+    .badge-country-blue { background-color: var(--brand-badge-blue) !important; }
+    .badge-country-orange { background-color: var(--brand-badge-orange) !important; }
+    .badge-program-teal { background-color: var(--brand-badge-teal) !important; }
+
+    /* Botones de filtros */
+    .btn-filter-outline {
+      border: 1px solid #9CA3AF;
+      color: #374151;
+      background: transparent;
+      border-radius: 50rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .btn-filter-outline:hover, .btn-filter-outline:focus {
+      border-color: var(--brand-navy);
+      color: var(--brand-navy);
+    }
+
+    .btn-filter-active {
+      background-color: var(--brand-badge-blue);
+      color: #ffffff;
+      border: 1px solid var(--brand-badge-blue);
+      border-radius: 50rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+    }
+
+    /* Tipografía y utilidades */
+    .fs-xs { font-size: 0.75rem; }
+    .fs-xxs { font-size: 0.65rem; }
+    .tracking-tight { letter-spacing: -0.025em; }
+    .tracking-wider { letter-spacing: 0.05em; }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- TopBar Utility -->
+  <div class="bg-brand-dark text-white py-1.5">
+    <div class="container d-flex justify-content-end align-items-center">
+      <button type="button" class="btn btn-link text-white-50 text-decoration-none p-0 d-flex align-items-center gap-1 fs-xs">
+        <span>Selecciona un país</span>
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header & Navbar -->
+  <header class="bg-white border-bottom sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light py-3" aria-label="Navegación principal">
+      <div class="container">
+        <!-- Logo Fundación -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+          <svg width="32" height="32" class="text-brand-dark" fill="currentColor" viewBox="0 0 40 40" role="img" aria-label="Logo Fundación">
+            <path d="M20 2C12 2 4 10 4 18c0 7 4 12 10 15 1 0.5 2 0.5 3-0.5 1-1 0.5-2-0.5-2.5C11 27 8 23 8 18c0-6.6 6-12 12-12s12 5.4 12 12c0 5-3 9-8.5 12-1 .5-1.5 1.5-0.5 2.5 1 1 2 1 3 0.5C32 30 36 25 36 18c0-8-8-16-16-16z"></path>
+            <path d="M20 10c-4.4 0-8 3.6-8 8 0 3.5 2.2 6.5 5.5 7.6.6.2 1.2 0 1.4-.6.2-.6 0-1.2-.6-1.4-2.3-.8-3.8-3-3.8-5.6 0-3.3 2.7-6 6-6s6 2.7 6 6c0 2.6-1.5 4.8-3.8 5.6-.6.2-.8.8-.6 1.4.2.6.8.8 1.4.6 3.3-1.1 5.5-4.1 5.5-7.6 0-4.4-3.6-8-8-8z"></path>
+          </svg>
+          <div class="d-flex flex-column lh-1">
+            <span class="fw-semibold text-muted text-uppercase fs-xxs tracking-wider">FUNDACIÓN</span>
+            <span class="fw-black text-brand-dark text-uppercase fs-6 tracking-tight">GESTIONAR</span>
+            <span class="fw-bold text-brand-dark text-uppercase fs-xxs tracking-wider">ESPERANZAS</span>
+          </div>
+        </a>
+
+        <!-- Botón menú responsive -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#newsNavbar" aria-controls="newsNavbar" aria-expanded="false" aria-label="Abrir navegación">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Enlaces de navegación -->
+        <div class="collapse navbar-collapse justify-content-end" id="newsNavbar">
+          <ul class="navbar-nav align-items-md-center gap-md-4 my-2 my-md-0">
+            <li class="nav-item"><a class="nav-link fw-medium text-secondary fs-xs" href="#">Qué hacemos</a></li>
+            <li class="nav-item"><a class="nav-link fw-medium text-secondary fs-xs" href="#">Transparencia</a></li>
+            <li class="nav-item"><a class="nav-link fw-medium text-secondary fs-xs" href="#">Involúcrate</a></li>
+            <li class="nav-item ms-md-2">
+              <a href="#" class="btn btn-brand-accent btn-sm rounded-pill px-4 fw-medium fs-xs">Donar</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Área de Contenido Principal -->
+  <main class="container py-5 flex-grow-1">
+    
+    <!-- Hero Section -->
+    <section class="mb-5">
+      <h1 class="display-6 fw-bold text-brand-navy mb-4">Noticias</h1>
+      <div class="row align-items-start g-4">
+        <div class="col-12 col-md-6 pe-md-4">
+          <h2 class="h5 fw-bold text-brand-navy mb-3">Lorem ipsum</h2>
+          <p class="text-secondary fs-xs lh-base text-justify m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ipsum est, molestie non varius ut, finibus sit amet dolor. Aliquam id finibus mauris. Etiam vitae sodales augue. Praesent fringilla mauris eget egestas semper. Praesent risus est, luctus at arcu non, sollicitudin blandit velit.
+          </p>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center ratio ratio-16x9">
+            <svg width="48" height="48" class="text-secondary opacity-50" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de Filtros y Tarjetas de Noticias -->
+    <div class="row g-4">
+      
+      <!-- Sidebar de Filtros -->
+      <aside class="col-12 col-md-3">
+        <h3 class="h6 fw-bold text-brand-navy mb-3">Filtros</h3 >
+
+        <!-- Filtro: País -->
+        <div class="mb-3">
+          <h4 class="fs-xs fw-semibold text-brand-navy mb-2">País</h4>
+          <div class="d-flex flex-wrap gap-1">
+            <button type="button" class="btn btn-filter-active">Chile</button>
+            <button type="button" class="btn btn-filter-outline">Argentina</button>
+            <button type="button" class="btn btn-filter-outline">Uruguay</button>
+          </div>
+        </div>
+
+        <!-- Filtro: Programa -->
+        <div class="mb-3">
+          <h4 class="fs-xs fw-semibold text-brand-navy mb-2">Programa</h4>
+          <div class="d-flex flex-column align-items-start gap-1.5">
+            <button type="button" class="btn btn-filter-outline">Espacios con Valor</button>
+            <button type="button" class="btn btn-filter-outline">Referentes al Frente</button>
+            <button type="button" class="btn btn-filter-outline">Una Vuelta +</button>
+            <button type="button" class="btn btn-filter-outline">Voluntariado Corporativo</button>
+            <button type="button" class="btn btn-filter-outline">Donación de Recursos</button>
+          </div>
+        </div>
+
+        <!-- Filtro: Fecha -->
+        <div class="mb-3">
+          <h4 class="fs-xs fw-semibold text-brand-navy mb-2">Fecha</h4>
+          <div class="d-flex flex-wrap gap-1">
+            <button type="button" class="btn btn-filter-outline">Últimos 30 días</button>
+            <button type="button" class="btn btn-filter-outline">Este año</button>
+          </div>
+        </div>
+
+        <!-- Filtro: Categoría -->
+        <div class="mb-3">
+          <h4 class="fs-xs fw-semibold text-brand-navy mb-2">Categoría</h4>
+          <div class="d-flex flex-wrap gap-1">
+            <button type="button" class="btn btn-filter-outline">Impacto</button>
+            <button type="button" class="btn btn-filter-outline">Alianzas</button>
+            <button type="button" class="btn btn-filter-outline">Transparencia</button>
+            <button type="button" class="btn btn-filter-outline">Programas</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Grilla de Tarjetas de Noticias (2 columnas x 3 filas) -->
+      <div class="col-12 col-md-9">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          
+          <!-- Noticia 1 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx0-zc2Eb6dBOrVU_SU6OIPfrIZpvyw_5nJMj-arH1RuS8uGLPUqR5BP42dm7D9SKHgGrBQsucQnNrRO49ykgV-lmhfzYws0iav4FlxDMfe3hLzmCThXAbAZTF9Gc92Hes8peW3BqflSn8ZmzQ1pXG0ehnBhDgo8Ml_fo6qBYzovOSZk1vsSrTv_1vU5wAbASQTt8hyFkgGYtUvp0wjrRivcf7Lh9IoGgA5EU_NgA" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-blue rounded-pill fs-xxs">Argentina</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Espacios con Valor</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Noticia 2 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDahNu4SiP8bxy8Ts4uRzFLFtyC4rN5OkHCoeAALuYJhqk1teR8ZpPlmXn_qK9266qHv-y6ygEET2ZknwEuz1TYvGsBM24A7OOstaWoTc_m0yQcCc6aUchJ1YkJf8vghIgo5EO6vbxTloXEnoRZliO-P-1cO5MpJ77fSIxkbSheoJS8apPbKMjftUVY2HW721vyi-n0G7uMwMNIYkb4pjlz45-CJELrN1f7Ug5FWu0" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-blue rounded-pill fs-xxs">Chile</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Referentes al Frente</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Noticia 3 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVi6Yb0TPSvdyuLKukYyS33_sKLt1Togqgxga-x_uKgtgxx9voXnAsaTqN824IRRlafj3zD1DlukS5v2dxjlAqqoAGvVMpdg0gHg5-tWr0AkNFBe8eLvMF9bkzNbvBugzfAyd8pk7e8B2CDnrcgmV-O51MaXHGeXlQG018MWTTBllfENwVDYSlbB3IcSG1J1n8B0kXeDkKd1vdFRnPJ4GFhHYSn4nk5v_Fh1CG0qA" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-orange rounded-pill fs-xxs">Uruguay</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Una vuelta +</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Noticia 4 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiKH-d6OsgOo1NydILz9CkTvye4CNacAeTFMIZj5N4KFdG520k7FiGGVlxRPQYo7GySvdXfgN4smWFZpIpjISFcUu3zKJ_FtbK8-OF2GvY3P4PWdYByr8zPsZzj-h6j4P0nQaH6HjjuwYQ3IBv6V7LgUQETwUXQkOwkP1cL-iGAOVAOT8JazpQPppxiXkN-4BBhKPqA2_CbINYpRKsD8i-wq_IHcMf0ZZU476YyhU" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-blue rounded-pill fs-xxs">Chile</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Voluntariado Corporativo</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Noticia 5 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLiiKqgaGgp5b4HX4zylEK_02G3VB08oSyYRUaSu-nADpytogAdJsf0ymk-Nive51ZDmMVq44108yUSHi6lxghZEorXN5UKOX-Xa1YGmKBAOl-5_vauJ_PETZsF8i8mXi3yOKEZKCTGL8S4UazbORML8bj7RbJx3yvrRxpj57RVqvV6hCu3kObyQgwCim7JJOWv0gPPQ_W9wBgoieRlYkawoddQcF_mPEMsqVU2-c" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-orange rounded-pill fs-xxs">Uruguay</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Donación de Recursos</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Noticia 6 -->
+          <div class="col">
+            <article class="card h-100 border-light-subtle rounded-3 overflow-hidden shadow-sm d-flex flex-column justify-content-between">
+              <div class="position-relative bg-brand-gray ratio ratio-16x9">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKPF2VBZ39GYul5agbi-a8fmTk9D0sCTCzJP1pzcmeBRIeBZeno5d8uFq4qJ9u0dnPvbg4PuYJhEaWr8fSXN8DroOh9-vvWnj3oOik_H5ORNd1Oqy1lkFtc9ckcfSVORUhum3fz-zm6peWJEC2SxduBmbH59eLXCHzVVcZnSlGVflABHjVTcCMWQpVHmsPqyONXzIQOyODLPeat9whg2u7UrYmaOYfb7mpbeaJRh0" class="object-fit-cover w-100 h-100 position-absolute top-0 start-0" alt="Noticia Imagen">
+                <div class="position-absolute top-0 start-0 p-2 d-flex flex-column align-items-start gap-1" style="z-index: 2;">
+                  <span class="badge badge-country-blue rounded-pill fs-xxs">Argentina</span>
+                  <span class="badge badge-program-teal rounded-pill fs-xxs">Espacios con Valor</span>
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column justify-content-between p-3">
+                <div>
+                  <h3 class="fs-xs fw-bold text-brand-navy mb-2">[Título de la noticia]</h3>
+                  <p class="fs-xxs text-secondary lh-base mb-3">[Resumen de la noticia: contexto, actividad y alcance local.]</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <span class="fs-xxs text-muted">[mes] [año]</span>
+                  <a href="#" class="btn btn-brand-accent btn-sm rounded-pill fs-xxs px-3 py-1">Leer más</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-brand-footer text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4 pb-4">
+        <!-- Logo e Información General -->
+        <div class="col-12 col-md-3">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg width="24" height="24" class="text-white" fill="currentColor" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M20 2C12 2 4 10 4 18c0 7 4 12 10 15 1 0.5 2 0.5 3-0.5 1-1 0.5-2-0.5-2.5C11 27 8 23 8 18c0-6.6 6-12 12-12s12 5.4 12 12c0 5-3 9-8.5 12-1 .5-1.5 1.5-0.5 2.5 1 1 2 1 3 0.5C32 30 36 25 36 18c0-8-8-16-16-16z"></path>
+              <path d="M20 10c-4.4 0-8 3.6-8 8 0 3.5 2.2 6.5 5.5 7.6.6.2 1.2 0 1.4-.6.2-.6 0-1.2-.6-1.4-2.3-.8-3.8-3-3.8-5.6 0-3.3 2.7-6 6-6s6 2.7 6 6c0 2.6-1.5 4.8-3.8 5.6-.6.2-.8.8-.6 1.4.2.6.8.8 1.4.6 3.3-1.1 5.5-4.1 5.5-7.6 0-4.4-3.6-8-8-8z"></path>
+            </svg>
+            <div class="d-flex flex-column lh-1">
+              <span class="fw-semibold text-white-50 text-uppercase fs-xxs">FUNDACIÓN</span>
+              <span class="fw-black text-white text-uppercase fs-6">GESTIONAR</span>
+              <span class="fw-bold text-white text-uppercase fs-xxs">ESPERANZAS</span>
+            </div>
+          </div>
+          <p class="fs-xxs text-white-50">
+            Este es un párrafo pequeño para acompañar el logo de arriba y entregar un mensaje.
+          </p>
+        </div>
+
+        <!-- Columna Navegación -->
+        <div class="col-12 col-md-3">
+          <h4 class="fs-xs fw-bold text-white mb-3">Navegación</h4>
+          <ul class="list-unstyled fs-xxs d-flex flex-column gap-2 m-0">
+            <li><a href="#" class="text-white-50 text-decoration-none">Inicio</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Selecciona un país</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Qué hacemos</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Involúcrate</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Transparencia -->
+        <div class="col-12 col-md-3">
+          <h4 class="fs-xs fw-bold text-white mb-3">Transparencia</h4>
+          <ul class="list-unstyled fs-xxs d-flex flex-column gap-2 m-0">
+            <li><a href="#" class="text-white-50 text-decoration-none">Gobernanza y Directorio</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Memorias anuales</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Impacto</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Informe financiero</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Contacto -->
+        <div class="col-12 col-md-3">
+          <h4 class="fs-xs fw-bold text-white mb-3">Contacto</h4>
+          <p class="fs-xxs m-0">
+            <a href="mailto:alianzas@gestionaresperanzas.com" class="text-white-50 text-decoration-none">
+              alianzas@gestionaresperanzas.com
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Legal / Copyright -->
+      <div class="border-top border-white-10 pt-3 d-flex flex-column flex-md-row justify-content-between align-items-center fs-xxs text-white-50">
+        <div>
+          © 2026 Fundación Gestionar Esperanzas. Todos los derechos reservados.
+        </div>
+        <div class="mt-2 mt-md-0">
+          <a href="#" class="text-white-50 text-decoration-none">Política de Privacidad</a> | 
+          <a href="#" class="text-white-50 text-decoration-none">Términos de Uso</a> | 
+          <a href="#" class="text-white-50 text-decoration-none">Tratamiento de Datos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5.3 JavaScript Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

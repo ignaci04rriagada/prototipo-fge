@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundación Gestionar Esperanzas</title>
+  
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Tipografía Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-navy: #22234B;
+      --brand-dark: #1c1a3b;
+      --brand-fuchsia: #ED2578;
+      --brand-fuchsia-hover: #d01d68;
+      --brand-teal: #00838F;
+      --brand-teal-hover: #006973;
+      --brand-gray-bg: #E9E9EB;
+      --brand-card-bg: #E7E7E9;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #1F2937;
+    }
+
+    /* Clases de Identidad Visual */
+    .bg-brand-navy { background-color: var(--brand-navy) !important; }
+    .text-brand-navy { color: var(--brand-navy) !important; }
+    
+    .bg-brand-gray { background-color: var(--brand-gray-bg) !important; }
+
+    .text-brand-fuchsia { color: var(--brand-fuchsia) !important; }
+    .bg-brand-fuchsia { background-color: var(--brand-fuchsia) !important; color: #ffffff !important; }
+    
+    .btn-brand-fuchsia {
+      background-color: var(--brand-fuchsia);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-brand-fuchsia:hover, .btn-brand-fuchsia:focus {
+      background-color: var(--brand-fuchsia-hover);
+      color: #ffffff;
+    }
+
+    .btn-brand-teal {
+      background-color: var(--brand-teal);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-brand-teal:hover, .btn-brand-teal:focus {
+      background-color: var(--brand-teal-hover);
+      color: #ffffff;
+    }
+
+    /* Utilidades semánticas de tamaño */
+    .fs-xs { font-size: 0.75rem; }
+    .fs-xxs { font-size: 0.65rem; }
+  </style>
+</head>
+<body>
+
+  <!-- TopBar -->
+  <div class="bg-brand-navy text-white py-1">
+    <div class="container d-flex justify-content-end align-items-center">
+      <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1 fs-xs opacity-75 opacity-100-hover">
+        <span>Selecciona un país</span>
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Header & Navbar -->
+  <header class="bg-white border-bottom sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light py-3" aria-label="Navegación principal">
+      <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+          <svg width="32" height="32" class="text-brand-navy" fill="currentColor" viewBox="0 0 24 24" role="img" aria-label="Logo Fundación">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+          </svg>
+          <div class="d-flex flex-column lh-1">
+            <span class="fw-bold text-muted text-uppercase fs-xxs tracking-wider">FUNDACIÓN</span>
+            <span class="fw-black text-brand-navy text-uppercase fs-6 tracking-tight">GESTIONAR</span>
+            <span class="fw-bold text-brand-navy text-uppercase fs-xxs tracking-wider">ESPERANZAS</span>
+          </div>
+        </a>
+
+        <!-- Botón Menú Responsive -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir menú de navegación">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navegación -->
+        <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+          <ul class="navbar-nav align-items-lg-center gap-lg-3">
+            <li class="nav-item"><a class="nav-link fw-semibold text-dark fs-xs" href="#que-hacemos">Qué hacemos</a></li>
+            <li class="nav-item"><a class="nav-link fw-semibold text-dark fs-xs" href="#transparencia">Transparencia</a></li>
+            <li class="nav-item"><a class="nav-link fw-semibold text-dark fs-xs" href="#involucrate">Involúcrate</a></li>
+            <li class="nav-item ms-lg-2">
+              <a class="btn btn-brand-fuchsia rounded-pill px-4 btn-sm fw-bold fs-xs" href="#donar">Donar</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Título H1 global accesible para jerarquía correcta de la landing -->
+    <h1 class="visually-hidden">Fundación Gestionar Esperanzas</h1>
+
+    <!-- Hero Container -->
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Columna Izquierda: Noticia Destacada y Alertas -->
+        <div class="col-12 col-lg-8 d-flex flex-column gap-4">
+          <!-- Tarjeta Noticia Destacada -->
+          <article class="bg-brand-gray rounded-3 p-4 p-md-5 position-relative d-flex flex-column justify-content-between flex-grow-1 min-vh-40">
+            <!-- Indicadores carrusel: role="group" permite aria-label en div -->
+            <div class="position-absolute top-0 end-0 p-4 d-flex gap-2" role="group" aria-label="Controles del carrusel">
+              <span class="bg-brand-navy rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+              <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+              <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+              <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+            </div>
+            
+            <div class="my-auto pt-4 max-w-lg">
+              <div class="mb-3 text-secondary">
+                <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" role="img" aria-label="Ícono de imagen">
+                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+                </svg>
+              </div>
+              <h2 class="h2 fw-extrabold text-brand-navy tracking-tight mb-4">
+                Esto es un titular importante de una noticias destacada
+              </h2>
+              <a href="#" class="btn btn-brand-fuchsia btn-sm fw-semibold rounded px-3">Ver más</a>
+            </div>
+          </article>
+
+          <!-- Bloque: Alertas y Campañas -->
+          <section class="border rounded-3 p-4 bg-white">
+            <h2 class="h6 fw-bold text-brand-navy mb-3">Alertas y campañas</h2>
+            <div class="d-flex justify-content-center pt-1">
+              <div class="bg-brand-navy text-white text-center rounded py-2 px-3" style="width: 70px;">
+                <div class="fs-xxs text-uppercase fw-bold">Chile</div>
+                <div class="fs-4 fw-bold lh-1 my-1">1</div>
+                <div class="fs-xxs text-white-50">Alerta</div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Columna Derecha: Tarjetas de Países -->
+        <div class="col-12 col-lg-4 d-flex flex-column gap-3">
+          <!-- Argentina -->
+          <article class="bg-brand-gray rounded-3 p-3 flex-fill d-flex flex-column justify-content-between min-vh-20">
+            <h3 class="badge bg-brand-navy align-self-start fw-semibold fs-xxs m-0">Argentina</h3>
+            <div class="d-flex justify-content-center align-items-center text-secondary py-4">
+              <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Uruguay -->
+          <article class="bg-brand-gray rounded-3 p-3 flex-fill d-flex flex-column justify-content-between min-vh-20">
+            <h3 class="badge bg-brand-navy align-self-start fw-semibold fs-xxs m-0">Uruguay</h3>
+            <div class="d-flex justify-content-center align-items-center text-secondary py-4">
+              <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Colombia -->
+          <article class="bg-brand-gray rounded-3 p-3 flex-fill d-flex flex-column justify-content-between min-vh-20">
+            <h3 class="badge bg-brand-navy align-self-start fw-semibold fs-xxs m-0">Colombia</h3>
+            <div class="d-flex justify-content-center align-items-center text-secondary py-4">
+              <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impacto Regional -->
+    <section class="container py-4">
+      <h2 class="h5 fw-bold text-brand-navy mb-1">Impacto regional</h2>
+      <p class="fs-xs text-muted mb-4">Última actualización: 26 de octubre de 2026</p>
+      
+      <div class="row row-cols-2 row-cols-md-4 g-3">
+        <!-- Métrica 1 -->
+        <div class="col">
+          <div class="border rounded p-4 text-center">
+            <p class="fs-xs text-muted mb-1">Métrica 1</p>
+            <p class="display-6 fw-bold text-brand-navy mb-1">999</p>
+            <span class="fs-xxs text-muted">small</span>
+          </div>
+        </div>
+        <!-- Métrica 2 -->
+        <div class="col">
+          <div class="border rounded p-4 text-center">
+            <p class="fs-xs text-muted mb-1">Métrica 2</p>
+            <p class="display-6 fw-bold text-brand-navy mb-1">999</p>
+            <span class="fs-xxs text-muted">small</span>
+          </div>
+        </div>
+        <!-- Métrica 3 -->
+        <div class="col">
+          <div class="border rounded p-4 text-center">
+            <p class="fs-xs text-brand-fuchsia fw-medium mb-1">Métrica 3</p>
+            <p class="display-6 fw-bold text-brand-fuchsia mb-1">999</p>
+            <span class="fs-xxs text-muted">small</span>
+          </div>
+        </div>
+        <!-- Métrica 4 -->
+        <div class="col">
+          <div class="border rounded p-4 text-center">
+            <p class="fs-xs text-muted mb-1">Párrafo.</p>
+            <p class="display-6 fw-bold text-brand-navy mb-1">999</p>
+            <span class="fs-xxs text-muted">small</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner Transparencia Activa -->
+    <section class="bg-brand-navy text-white py-4 my-4">
+      <div class="container d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+        <h2 class="h4 fw-bold m-0">Transparencia activa</h2>
+        <a href="#transparencia" class="btn btn-brand-fuchsia btn-sm px-4 fw-bold">Ir a Transparencia</a>
+      </div>
+    </section>
+
+    <!-- Alianzas -->
+    <section class="container py-4">
+      <h2 class="h5 fw-bold text-brand-navy mb-4">Alianzas</h2>
+      <div class="row row-cols-2 row-cols-sm-3 row-cols-md-6 g-3">
+        <!-- 6 Logos Placeholder -->
+        <div class="col" tabindex="0">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo Colaborar -->
+    <section class="container py-4">
+      <h2 class="h5 fw-bold text-brand-navy mb-1">Cómo colaborar</h2>
+      <p class="fs-xs text-muted mb-4">Opciones reales de donación, voluntariado y alianzas para [país].</p>
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Donación -->
+        <div class="col">
+          <article class="border rounded-3 p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <h3 class="h6 fw-bold text-brand-navy mb-2">Donación</h3>
+              <p class="fs-xs text-muted mb-4">Modalidades de donación vigentes para [país].</p>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-brand-teal btn-sm fw-semibold">Donación única</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold">Donación recurrente</button>
+            </div>
+          </article>
+        </div>
+        <!-- Voluntariado -->
+        <div class="col">
+          <article class="border rounded-3 p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <h3 class="h6 fw-bold text-brand-navy mb-2">Voluntariado</h3>
+              <p class="fs-xs text-muted mb-4">Oportunidades de voluntariado disponibles en [país].</p>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-brand-fuchsia btn-sm fw-semibold">Ver oportunidades</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold">Contactar equipo</button>
+            </div>
+          </article>
+        </div>
+        <!-- Alianzas -->
+        <div class="col">
+          <article class="border rounded-3 p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <h3 class="h6 fw-bold text-brand-navy mb-2">Alianzas</h3>
+              <p class="fs-xs text-muted mb-4">Información para empresas y organizaciones que desean colaborar en [país].</p>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-brand-teal btn-sm fw-semibold">Conocer alianzas</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold">Contactar equipo</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="container py-4 pb-5">
+      <h2 class="h5 fw-bold text-brand-navy mb-1">Testimonios</h2>
+      <p class="fs-xs text-muted mb-4">Programas, proyectos y enfoques adaptados al contexto local, manteniendo la misma estructura de contenido para Chile, Argentina y Uruguay.</p>
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Tarjeta 1 -->
+        <div class="col">
+          <article class="bg-brand-gray rounded-3 p-4 min-vh-20 d-flex flex-column justify-content-between h-100">
+            <h3 class="fs-xxs text-muted fw-medium m-0">Programa 1</h3>
+            <div class="d-flex justify-content-center text-secondary my-auto">
+              <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+              </svg>
+            </div>
+          </article>
+        </div>
+        <!-- Tarjeta 2 -->
+        <div class="col">
+          <article class="border rounded-3 p-4 h-100">
+            <h3 class="fs-xs fw-bold text-brand-navy mb-2">Javiera González, 26 años.</h3>
+            <p class="fs-xxs text-muted fst-italic lh-base m-0">
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam molestie mauris et quam efficitur fringilla. Praesent in risus vestibulum, mattis sapien ac, aliquam justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci varius natoque penatibus".
+            </p>
+          </article>
+        </div>
+        <!-- Tarjeta 3 -->
+        <div class="col">
+          <article class="bg-brand-gray rounded-3 p-4 min-vh-20 d-flex flex-column justify-content-between h-100">
+            <h3 class="fs-xxs text-muted fw-medium m-0">Programa 1</h3>
+            <div class="d-flex justify-content-center text-secondary my-auto">
+              <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-brand-navy text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4 pb-4">
+        <!-- Info Branding -->
+        <div class="col-12 col-md-3">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg width="24" height="24" class="text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+            </svg>
+            <div class="d-flex flex-column lh-1">
+              <span class="fw-bold text-white-50 text-uppercase fs-xxs">FUNDACIÓN</span>
+              <span class="fw-black text-white text-uppercase fs-6">GESTIONAR</span>
+              <span class="fw-bold text-white text-uppercase fs-xxs">ESPERANZAS</span>
+            </div>
+          </div>
+          <p class="fs-xxs text-white-50">
+            Esto es un párrafo pequeño para acompañar el logo de arriba y entregar un mensaje.
+          </p>
+        </div>
+
+        <!-- Columna: Navegación -->
+        <div class="col-12 col-md-3">
+          <h2 class="fs-xs fw-bold text-white mb-3">Navegación</h2>
+          <ul class="list-unstyled fs-xs d-flex flex-column gap-2 m-0">
+            <li><a href="#" class="text-white-50 text-decoration-none">Inicio</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Selecciona un país</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Qué hacemos</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Involúcrate</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna: Transparencia -->
+        <div class="col-12 col-md-3">
+          <h2 class="fs-xs fw-bold text-white mb-3">Transparencia</h2>
+          <ul class="list-unstyled fs-xs d-flex flex-column gap-2 m-0">
+            <li><a href="#" class="text-white-50 text-decoration-none">Gobernanza y Directorio</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Memorias anuales</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Impacto</a></li>
+            <li><a href="#" class="text-white-50 text-decoration-none">Informe financiero</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna: Contacto -->
+        <div class="col-12 col-md-3">
+          <h2 class="fs-xs fw-bold text-white mb-3">Contacto</h2>
+          <p class="fs-xs m-0">
+            <a href="mailto:alianzas@gestionaresperanzas.com" class="text-white-50 text-decoration-none">
+              alianzas@gestionaresperanzas.com
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Legal / Copyright -->
+      <div class="border-top border-secondary pt-3 d-flex flex-column flex-sm-row justify-content-between align-items-center fs-xxs text-white-50">
+        <div>
+          © 2026 Fundación Gestionar Esperanzas. Todos los derechos reservados.
+        </div>
+        <div class="mt-2 mt-sm-0">
+          <a href="#" class="text-white-50 text-decoration-none">Política de Privacidad</a> | 
+          <a href="#" class="text-white-50 text-decoration-none">Términos de Uso</a> | 
+          <a href="#" class="text-white-50 text-decoration-none">Tratamiento de Datos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5.3 JavaScript Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
