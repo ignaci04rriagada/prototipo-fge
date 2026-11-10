@@ -10,10 +10,10 @@ $paises   = fge_paises();
 $fge_base = fge_base();
 ?>
 <!-- organism/topbar-paises (dropdown funcional) -->
-<div class="bg-brand-navy text-white py-1 fge-topbar-paises">
+<div class="bg-purple-950 text-white py-1 fge-topbar-paises">
   <div class="container d-flex justify-content-end align-items-center">
     <div class="dropdown">
-      <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1 fs-xs opacity-75 opacity-100-hover" id="fgeDropdownPaises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <a href="#" class="fge-topbar-paises__toggle text-decoration-none d-flex align-items-center gap-1 fs-xs" id="fgeDropdownPaises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <span>Selecciona un país</span>
         <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
           <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>

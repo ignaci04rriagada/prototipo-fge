@@ -23,7 +23,7 @@ if ($acciones === null) {
     <div class="d-flex gap-3 flex-wrap">
       <?php foreach ($acciones as $accion) : ?>
         <a href="<?= htmlspecialchars($accion['href'] ?? '#') ?>"
-          class="btn <?= ($accion['estilo'] ?? 'principal') === 'secundario' ? 'btn-outline-light' : 'btn-brand-fuchsia' ?> btn-sm px-4 fw-bold">
+          class="btn <?= ($accion['estilo'] ?? 'principal') === 'secundario' ? 'btn-outline-light' : 'btn-fge btn-fge--primary' ?> btn-sm px-4 fw-bold">
           <?= htmlspecialchars($accion['texto']) ?>
         </a>
       <?php endforeach; ?>

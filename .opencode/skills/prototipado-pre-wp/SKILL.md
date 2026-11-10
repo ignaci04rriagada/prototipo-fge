@@ -105,6 +105,28 @@ prototipo/
 7. **MAPA-MIGRACION.md** → manifest vivo: archivo prototipo → archivo tema + transformación
    (copiar / reemplazar include por hook WP / data→SCF).
 
+## Modo sin MCP de Figma (el rol de las capturas PNG)
+
+El MCP de Figma fue herramienta de DESCUBRIMIENTO puntual (specs del sistema:
+tipografía calibrada a tokens, medidas de bloques contratados en componentes);
+no es dependencia por página. Fuente de diseño para cada maquetado nuevo:
+
+1. **Mockup HTML en la raíz** = fuente estructural (esqueleto, secciones,
+   contenido). Se consumió así con tabs (Transparencia) y dimensiones
+   (Qué-hacemos): armar BEM sobre el mockup, no traducirlo.
+2. **1 captura PNG por sección** (provista por el cliente, guardar en
+   `docs/figma/` si hay que conservarlas) = fuente visual (jerarquía,
+   espaciado, colores). Equivale al design-context sin costo.
+3. **Antes de maquetar, cerrar el SLA del directorio**: este flujo demostró
+   que cada página abre una definición de quién administra qué (país/año/
+   archivo; destacados; chips). Preguntarlo primero evita reformular data.
+4. Textos: los definitivos si existen; si no, el lorem heredado del mockup
+   con nota de que son copy pendiente. Nada bloquea por falta de assets:
+   imágenes van como placeholder (bi-image / bi-geo-alt) hasta data real.
+
+Regla de íconos: primero Bootstrap Icons; SVG custom solo si una captura
+exige algo que el set no trae.
+
 ## Auditoría típica (errores que este flujo previene)
 
 - Páginas con `<style>` local propio y variables tipo `--brand-*` que no son los tokens.

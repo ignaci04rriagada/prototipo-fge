@@ -15,7 +15,7 @@ $pais = $pais ?? null;
     <div class="col">
       <div class="card h-100 border-light-subtle rounded-1 p-3">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="badge bg-brand-cyan rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;">📍</span>
+          <span class="badge badge-fge--pais rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
           <h3 class="fs-xs fw-bold text-dark m-0">Oficina local</h3>
         </div>
         <p class="fs-xxs text-muted m-0">[dirección]</p>
@@ -26,7 +26,7 @@ $pais = $pais ?? null;
     <div class="col">
       <div class="card h-100 border-light-subtle rounded-1 p-3">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="badge bg-brand-purple-card rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;">✉</span>
+          <span class="badge badge-fge--pais rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;"><i class="bi bi-envelope" aria-hidden="true"></i></span>
           <h3 class="fs-xs fw-bold text-dark m-0">Correo</h3>
         </div>
         <p class="fs-xxs text-muted m-0"><?= htmlspecialchars($pais['sede']['email']) ?></p>
@@ -37,7 +37,7 @@ $pais = $pais ?? null;
     <div class="col">
       <div class="card h-100 border-light-subtle rounded-1 p-3">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="badge bg-brand-green rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;">📞</span>
+          <span class="badge badge-fge--pais rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width: 20px; height: 20px;"><i class="bi bi-telephone" aria-hidden="true"></i></span>
           <h3 class="fs-xs fw-bold text-dark m-0">Teléfono</h3>
         </div>
         <p class="fs-xxs text-muted m-0"><?= htmlspecialchars($pais['sede']['tel']) ?></p>

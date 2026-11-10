@@ -39,7 +39,7 @@ Un componente declara en su cabecera su contrato: qué variables recibe, de qué
 - **Design tokens únicos.** Todo color, espaciado y tipografía viene de las variables de `:root` en `style.css`. Ningún hex suelto en los componentes; si un valor no tiene token, se documenta con comentario de deuda.
 - **Un diseño por componente.** Si el mismo bloque aparece en varias páginas con diseño distinto, se unifica. Lo que cambia entre contextos es la consulta de datos, no el markup.
 - **Diferencia entre diseño y selección de contenido.** Ejemplo real: los testimonios de la página principal (los que el cliente destaca) y los de la página de país (filtrados por territorio) comparten la misma molécula; la sola consulta cambia.
-- **`bridge.css` es deuda temporal.** Mapea utilidades de los mockups a los tokens oficiales y muere cuando las últimas secciones pasen a clases propias.
+- **Un solo CSS.** `style.css` contiene tokens + componentes + utilidades de marca del sistema (`bg-purple-950`, `bg-neutral-200`, `text-brand-*`). Los mockups no usan CSS propio: si una utilidad falta, se promueve a las secciones 4-6 del archivo con tokens, no se crea un archivo paralelo. `bridge.css` fue eliminado al cierre de las páginas (11/2026).
 
 ## Helpers principales (bootstrap.php)
 
@@ -50,6 +50,8 @@ Un componente declara en su cabecera su contrato: qué variables recibe, de qué
 | `fge_componente($ruta, $vars)` | Renderiza un componente con sus variables |
 | `fge_base()` | URL absoluta del prototipo (evita rutas relativas rotas) |
 | `fge_url_pais($slug)` | Enlace a la página de país |
+| `fge_paises()` | Solo los países con `activo => true` (topbar, tabs, selects, selector de donación) |
+| `fge_pais($slug)` / `fge_pais_slug()` | Datos y slug del país según URL (`?pais=`) con fallback al primero activo |
 
 ## Entorno y verificación
 
@@ -66,6 +68,6 @@ Un componente declara en su cabecera su contrato: qué variables recibe, de qué
 
 ## Estado
 
-Páginas maquetadas y auditadas: principal (`page-home`), país (`page-pais`, molde paramétrico por `?pais=slug`), transparencia (`page-transparencia`) y navegación conectada entre ellas. El resto de páginas del sitio pendiente de replicar el mismo patrón.
+8 páginas completas: home, país (`?pais=`), qué-hacemos, transparencia, alianzas, donación (`?pais=`), noticias (grilla con filtros país/programa) y noticia single (`?id=`). Fuentes de diseño: mockups HTML en la raíz (estructura) + specs del sistema; el MCP de Figma se usó solo para calibrar los tokens tipográficos iniciales y ya no es dependencia (ver skill "Modo sin MCP").
 
 La migración a WordPress no comienza hasta validar el prototipo completo. Cuando ocurra, cada pieza ya tiene su traducción definida: moléculas a template parts, `data/` a CPTs con ACF/SCF, y `fge_consulta()` a `WP_Query`.

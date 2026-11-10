@@ -12,7 +12,7 @@ $menu       = fge_datos('menu');
 $fge_base   = fge_base();
 ?>
 <!-- organism/footer-fge -->
-<footer class="bg-brand-navy text-white pt-5 pb-4">
+<footer class="bg-purple-950 text-white pt-5 pb-4">
   <div class="container">
     <div class="row g-4 pb-4">
 
@@ -37,10 +37,10 @@ $fge_base   = fge_base();
       <div class="col-12 col-md-3">
         <h2 class="fs-xs fw-bold text-white mb-3">Navegación</h2>
         <ul class="list-unstyled fs-xs d-flex flex-column gap-2 m-0">
-          <li><a href="<?= $fge_base ?>/pages/page-home.php" class="text-white-50 text-decoration-none">Inicio</a></li>
-          <li><a href="#" class="text-white-50 text-decoration-none">Selecciona un país</a></li>
-          <li><a href="#" class="text-white-50 text-decoration-none">Qué hacemos</a></li>
-          <li><a href="#" class="text-white-50 text-decoration-none">Involúcrate</a></li>
+          <li><a href="<?= $fge_base ?>/pages/page-home.php" class="footer-fge__link text-decoration-none">Inicio</a></li>
+          <li><a href="#" class="footer-fge__link text-decoration-none">Selecciona un país</a></li>
+          <li><a href="#" class="footer-fge__link text-decoration-none">Qué hacemos</a></li>
+          <li><a href="#" class="footer-fge__link text-decoration-none">Involúcrate</a></li>
         </ul>
       </div>
 
@@ -48,10 +48,10 @@ $fge_base   = fge_base();
       <div class="col-12 col-md-3">
         <h2 class="fs-xs fw-bold text-white mb-3">Transparencia</h2>
         <ul class="list-unstyled fs-xs d-flex flex-column gap-2 m-0">
-          <li><a href="#" class="text-white-50 text-decoration-none">Gobernanza y Directorio</a></li>
-          <li><a href="<?= $fge_base ?>/pages/page-transparencia.php" class="text-white-50 text-decoration-none">Memorias anuales</a></li>
-          <li><a href="#" class="text-white-50 text-decoration-none">Impacto</a></li>
-          <li><a href="<?= $fge_base ?>/pages/page-transparencia.php" class="text-white-50 text-decoration-none">Informe financiero</a></li>
+          <li><a href="#" class="footer-fge__link text-decoration-none">Gobernanza y Directorio</a></li>
+          <li><a href="<?= $fge_base ?>/pages/page-transparencia.php" class="footer-fge__link text-decoration-none">Memorias anuales</a></li>
+          <li><a href="#" class="footer-fge__link text-decoration-none">Impacto</a></li>
+          <li><a href="<?= $fge_base ?>/pages/page-transparencia.php" class="footer-fge__link text-decoration-none">Informe financiero</a></li>
         </ul>
       </div>
 
@@ -59,7 +59,7 @@ $fge_base   = fge_base();
       <div class="col-12 col-md-3">
         <h2 class="fs-xs fw-bold text-white mb-3">Contacto</h2>
         <p class="fs-xs m-0">
-          <a href="mailto:alianzas@gestionaresperanzas.com" class="text-white-50 text-decoration-none">
+          <a href="mailto:alianzas@gestionaresperanzas.com" class="footer-fge__link text-decoration-none">
             alianzas@gestionaresperanzas.com
           </a>
         </p>
@@ -72,9 +72,9 @@ $fge_base   = fge_base();
         © <?= date('Y') ?> Fundación Gestionar Esperanzas. Todos los derechos reservados.
       </div>
       <div class="mt-2 mt-sm-0">
-        <a href="#" class="text-white-50 text-decoration-none">Política de Privacidad</a> |
-        <a href="#" class="text-white-50 text-decoration-none">Términos de Uso</a> |
-        <a href="#" class="text-white-50 text-decoration-none">Tratamiento de Datos</a>
+        <a href="#" class="footer-fge__link text-decoration-none">Política de Privacidad</a> |
+        <a href="#" class="footer-fge__link text-decoration-none">Términos de Uso</a> |
+        <a href="#" class="footer-fge__link text-decoration-none">Tratamiento de Datos</a>
       </div>
     </div>
   </div>

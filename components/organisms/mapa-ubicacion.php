@@ -20,7 +20,9 @@ $fge_base = fge_base();
     <?php if (!empty($mapa['imagen']) && file_exists(__DIR__ . '/../../assets/img/' . $mapa['imagen'])) : ?>
       <img src="<?= $fge_base ?>/assets/img/<?= htmlspecialchars($mapa['imagen']) ?>" class="w-100 h-100 object-fit-cover" loading="lazy" alt="<?= htmlspecialchars($mapa['alt'] ?? '') ?>">
     <?php else: ?>
-      <i class="bi bi-geo-alt" style="font-size: 56px;" aria-hidden="true"></i>
+      <div class="px-4">
+        <i class="bi bi-image text-secondary opacity-50 d-flex align-items-center justify-content-center h-100" style="font-size: 56px;" aria-hidden="true"></i>
+      </div>
     <?php endif; ?>
   </div>
 </section>

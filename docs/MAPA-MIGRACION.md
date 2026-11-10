@@ -84,4 +84,57 @@ Fuente: Figma `Wireframes | Fundación Gestionar Esperanzas`, file `6de6Qn0KN9yS
 - `#383165` (morado más profundo que purple-900 → proponer `purple-1000`)
 - `#616161` / `#212121` / `#e0e0e0` (grises de texto/borde/placeholder de los wireframes)
 
-**Método:** primera auditoría hecha con **Figma MCP** en vez de captura pegada — números exactos de grid/gap/colores sin adivinación. En adelante: link de Figma → MCP como fuente primaria; captura PNG solo como fallback.
+**Método:** primera auditoría hecha con **Figma MCP** en vez de captura pegada —
+números exactos de grid/gap/colores sin adivinación. **ACTUALIZADO 10/11/2026:** el
+MCP se usa como herramienta de *descubrimiento puntual*, no por página (costo
+ Starter no presupuestado); a futuro la fuente de diseño por página es
+mockup + capturas PNG (ver skill "Modo sin MCP de Figma").
+
+## ✅ Auditoría — `pages/page-transparencia.php` (10/11/2026)
+
+Diseño combinado: **estructura de `transparencia.html`** (tabs por país —
+preferido del cliente) + **specs Figma `478:3987`** (hero, banner CTA).
+
+| Pieza | Estado |
+|---|---|
+| Molécula `tabs-documentos` (§6.4 CSS, tokens, sufijos únicos) | ✅ nueva |
+| Modelo directorio: país + tipo + año + archivo por documento | ✅ `data/posts-transparencia.php` (futuro CPT + SCF) |
+| País/activo: Chile/Argentina/Uruguay activos; Colombia/Perú/México futura expansión | ✅ flag en `data/paises.php` + helper `fge_paises()` |
+| Fallback país inactivo (`?pais=colombia` → Argentina) | ✅ verificado |
+| Hero via `hero-simple` (bug `$fge_hero` vs `$hero` corregido) | ✅ |
+| Directivos con foto placeholder (`foto => ''`) | ✅ SVG retrato, sin imagen real |
+| Deuda terse | docs hrefs `#` hasta existir page-donación / PDFs reales |
+
+## ✅ Auditoría — `pages/page-que-hacemos.php` (10/11/2026)
+
+Diseño combinado: **Figma `478:2771`** (definitivo) + **estructura
+`que-hacemos.html`**, normalizada a tokens.
+
+| Pieza | Estado |
+|---|---|
+| `hero-simple` extendido con CTA opcional (contrato único de hero interior) | ✅ |
+| `mapa-ubicacion` organism (placeholder 21:9 + `bi-geo-alt`) | ✅ nueva; captura real pendiente |
+| Normalización de color: success/info/danger del mockup → morado marca | ✅ documento en §6.5 |
+| Model (nuevos): `card-dimension` + `data/dimensiones.php`, `programa-fila` + `data/posts-iniciativas.php` (5 programas, chips, caso Volutiva-Chile, campañas), `card-caso-org` + `data/posts-casos.php` (flag destacado) | ✅ |
+| Bug Bootstrap `.ratio > *` (100%×100% a hijos): badge país estirado, icono sin centrar | ✅ fixed patrón wrapper-relative en card-caso-org + heurística aplicada (card-noticia, card-organizacion) |
+| Íconos: Bootstrap Icons 1.11.3 CDN global (head.php) | ✅ regla registrada en skill |
+| Deuda tersa | tokens neutral-200/300 aún literales; iconos dimension definitivos del Figma por confirmar vía capturas |
+
+## ✅ Auditoría final — páginas restantes + cierre de deuda (10/11/2026)
+
+| Página | Fuente | Piezas nuevas |
+|---|---|---|
+| `page-alianzas` | alianzas.html + specs 478:3634 mapeadas | `paso-proceso`, `pilar-alianza` + data `pasos-alianza`/`pilares-alianza`; `form-alianza` organism (país ← `fge_paises()`); hero-simple + keys `etiqueta`/`subtitulo` (opcional: cero impacto en otras páginas) |
+| `page-donacion` | donacion.html | `selector-pais` (selección por `?pais=`, flechas del mockup eran decorativas), `form-donacion` (responsable local ← relación país→equipo), testimonios del país |
+| `page-noticias` + `page-noticia` | noticia-grilla.html / nooticia.html | `filtros-noticia` (país+programa funcionales por query; fecha/categoría = facets futuros), badge de programa en `card-noticia`, data normalizada (linea_programa + secciones/cita para el single) |
+
+**Cierre del puente (plan B aprobado):** `bridge.css` eliminado. Mudanzas con
+nombre del sistema a `style.css` (§4): `.bg-purple-950`, `.bg-neutral-200`
+(deuda token); sed de todos los usos (text-brand-navy→primary; bg-brand-navy→purple-950;
+bg-brand-gray→neutral-200; btn-brand-fuchsia/pink→btn-fge--primary; contacto-local
+con íconos bootstrap-icons). Un solo cascade — estilo `wp_enqueue` único en WP.
+
+**Estado final del prototipo:** 8 páginas (home, país, qué-hacemos, transparencia,
+alianzas, donación, noticias, noticia) — curl 200 en todas con variaciones
+?pais/?id. Deudas: tokens neutral-200/300 (literales documentadas), PDFs/e-mágenes
+reales pendientes de data, hrefs `#` hasta páginas internas conectadas.

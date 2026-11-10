@@ -24,14 +24,15 @@
   $fge_base = fge_base();
   ?>
 
-  <!-- Bootstrap 5.3 (CDN; en WP: wp_register_style desde css-functions.php) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons: fuente de íconos del sistema (1.11.3) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-  <!-- Sistema de diseño FGE: tokens + BEM + fuentes locales (@font-face Envolventa/Lato) -->
+  <!-- Sistema de diseño FGE: tokens + BEM + fuentes locales (@font-face Envolventa/Lato).
+       Bootstrap 5.3 se importa y encapsula DENTRO de style.css vía
+       @import url(...) layer(bootstrap) — las capas fge.* garantizan que
+       el sistema SIEMPRE gane sin !important (arquitectura @layer). -->
   <link rel="stylesheet" href="<?= $fge_base ?>/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
 
   <!-- Puente legado→tokens (DEUDA P2: desaparece al completar BEM) -->
-  <link rel="stylesheet" href="<?= $fge_base ?>/assets/css/bridge.css?v=<?= filemtime(__DIR__ . '/../assets/css/bridge.css') ?>">
+
 </head>

@@ -1,58 +1,58 @@
 /* ==========================================================================
-   FUNDACIÓN GESTIONAR ESPERANZAS - SISTEMA DE ESTILOS (BEM)
+   FUNDACIÓN GESTIONAR ESPERANZAS - SISTEMA DE ESTILOS (BEM + @layer)
    ==========================================================================
    🔑 CONTRATO DE USO (para todo maquetado nuevo, humano o IA):
-   1. Este archivo ya está delineado por la guía de estilo: las sections
-      1-3 y 7 NO se tocan salvo aprobación explícita del cliente.
-   2. Los componentes nuevos PUEDEN hacer crecer las sections 4-6, pero
-      SOLO consumiendo los tokens semánticos y de espaciado de :root
-      (--fge-color-*, --fge-space-*, --fge-radius-*, --fge-font-size-*).
+   1. Arquitectura: CSS Cascade Layers. El orden declarado de capas manda:
+      bootstrap → fge.tokens → fge.base → fge.components → fge.utilities.
+      Las capas FGE SIEMPRE ganan a Bootstrap sin !important (bootstrap vive
+      encapsulado en su propia capa vía @import layer(bootstrap)).
+   2. Dónde va cada cosa nueva:
+      fge.tokens     → SOLO tokens (con aprobación del cliente).
+      fge.base       → elementos глобales (body, headings, links; WCAG).
+      fge.components → átomos → moléculas → organismos BEM (crece libre).
+      fge.utilities  → utilidades puntuales y overrides de grilla del sistema.
+   3. Componentes nuevos consumen SOLO tokens semánticos y de espaciado de
+      fge.tokens (--fge-color-*, --fge-space-*, --fge-radius-*, --fge-font-*).
       Prohibido: hex sueltos, px sueltos, font-sizes arbitrarios.
-   3. Si un valor no existe como token: NO inventar. Se propone el token
-      al cliente ("necesito neutral-200") y, mientras se define, el valor
-      va como literal con comentario // deuda: crear --fge-color-neutral-200.
-   4. Un componente = un bloque BEM con comentario de contrato (dónde vive,
-      qué token consumió y qué concepto en el mockup()).  El mismo diseño
-      en varios contextos; lo que cambia la consulta, no el CSS.
-   5. Sombra/efectos del mockup: clases de utilidad de marca bien del sistema
-      (§4) van con nombre fge-*  frente  names de la mockup (bridge.css).
-      
-   TABLA DE CONTENIDOS:
-   
-   1. SETTINGS & VARIABLES
-      - Custom Properties / Design Tokens (:root)
-      
-   2. GENERICS & RESETS
-      - Normalización, accesibilidad y foco global
-      
-   3. BASE & ELEMENTS
-      - Tipografía global
-      - Enlaces y estados generales
-      
-   4. ATOMS (Átomos)
-      - .btn-fge (Botones principales y variantes)
-      - .badge-fge (Etiquetas y badges)
-      
-   5. MOLECULES (Moléculas)
-      - .card-fge (Tarjetas de proyectos)
-      - .testimonial-fge (Citas y testimonios)
-      
-   6. ORGANISMS (Organismos)
-      - .header-fge (Navegación / Navbar)
-      - .hero-fge (Sección principal)
-      - .projects-grid-fge (Grilla de proyectos)
-      - .footer-fge (Pie de página)
-      
-   7. UTILITIES & OVERRIDES
-      - Clases auxiliares puntuales
-      - Ajustes sobre Bootstrap 5.3
+   4. Si un valor no existe como token: NO inventar. Se propone el token al
+      cliente y, mientras, el valor va como literal con deuda documentada
+      (comentario "deuda: crear --fge-color-neutral-200" y registro en
+      MAPA-MIGRACION para tokenizar en la próxima pasada).
+   5. Un componente = un bloque BEM con comentario de contrato (dónde vive,
+      qué tokens consumió y qué concepto del mockup). El mismo diseño en
+      varios contextos; lo que cambia es la consulta, no el CSS.
+
+   MAPA DE CONTENIDOS (orden físico = orden de capas):
+
+      [ sin layer ]  @font-face (Envolventa + Lato) — no compite en cascade
+      LAYER bootstrap → @import (declarada al inicio; contenido en el CDN)
+      LAYER fge.tokens     1. SETTINGS: un solo :root (colores, tipografía,
+                               espaciado, radios, sombras, grilla Figma)
+      LAYER fge.base       2. GENERICS (foco WCAG) + 3. BASE (body, h1-h6, a)
+      LAYER fge.components 4. ATOMS → 5. MOLECULES → 6. ORGANISMS
+                               (en el orden en que compone el shell global)
+      LAYER fge.utilities  7. UTILITIES & OVERRIDES (grilla Figma, color /
+                               tipografía de marca, utilidades promovidas)
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Declaración de capas (SU ORDEN define la precedencia, de menor a mayor).
+   Bootstrap queda encapsulado: cualquier regla FGE (por la layer mínima que
+   sea) le gana sin importar especificidad ni posición. Nunca used a !important.
+   -------------------------------------------------------------------------- */
+@layer bootstrap, fge.tokens, fge.base, fge.components, fge.utilities;
+
+/* Bootstrap 5.3 encapsulado en su capa (antes: <link> en includes/head.php).
+   @import debe preceder a toda regla → es la 2ª sentencia del archivo. */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css') layer(bootstrap);
 
 /* ==========================================================================
    FUENTES LOCALES (@font-face)
+   Sin layer: @font-face no participa del cascade (matcheo por font-family,
+   no por especificidad). Es lo único que se permite fuera de capas.
    ========================================================================== */
 
-/* --- 1. Envolventa (Encabezados) --- */
+/* --- Envolventa (Encabezados) --- */
 @font-face {
   font-family: 'Envolventa';
   src: url('../fonts/envolventa/Evolventa-Bold.woff') format('woff');
@@ -61,7 +61,7 @@
   font-display: swap; /* Evita parpadeos de texto invisible mientras carga */
 }
 
-/* --- 2. Lato (Cuerpo de texto) --- */
+/* --- Lato (Cuerpo de texto) --- */
 /* Regular (400) */
 @font-face {
   font-family: 'Lato';
@@ -81,761 +81,796 @@
 }
 
 /* ==========================================================================
-   1. SETTINGS & VARIABLES
+   LAYER fge.tokens — 1. SETTINGS & VARIABLES
+   Un único :root. Todo token debe poder encontrarse aquí.
    ========================================================================== */
+@layer fge.tokens {
+  :root {
+    /* -----------------------------------------
+       A. Sistema de Colores (Primitivos)
+    -----------------------------------------------*/
+    /* Color Primario / Marca (30% de uso) */
+    --fge-color-purple-base: #4c4688;
+    --fge-color-purple-700: #423c76;
+    --fge-color-purple-800: #383165;
+    --fge-color-purple-850: #2f2753;
+    --fge-color-purple-900: #251c42;
+    --fge-color-purple-950: #1b1230;
 
-:root {
-  /* -----------------------------------------
-     A. Sistema de Colores (Primitivos)
-  -----------------------------------------------*/
-  /* Color Primario / Marca (30% de uso) */
-  --fge-color-purple-base: #4c4688;
-  --fge-color-purple-700: #423c76;
-  --fge-color-purple-800: #383165;
-  --fge-color-purple-850: #2f2753;
-  --fge-color-purple-900: #251c42;
-  --fge-color-purple-950: #1b1230;
+    /* Colores Secundarios / Acento (Paleta del Isotipo) */
+    --fge-color-cyan-base: #1baac1;
+    --fge-color-green-base: #199d6b;
+    --fge-color-pink-base: #ff2471;
+    --fge-color-pink-hover: #ff2471d8;
+    --fge-color-yellow-base: #ffc04c;
+    --fge-color-lime-base: #5da430;
 
-  /* Colores Secundarios / Acento (Paleta del Isotipo) */
-  --fge-color-cyan-base: #1baac1;
-  --fge-color-green-base: #199d6b;
-  --fge-color-pink-base: #ff2471;
-  --fge-color-pink-hover: #ff2471d8;
-  --fge-color-yellow-base: #ffc04c;
-  --fge-color-lime-base: #5da430;
+    /* Neutrales */
+    --fge-color-neutral-100: #fafafa;
+    --fge-color-neutral-400: #a09fa2;
+    --fge-color-neutral-600: #706e78;
+    --fge-color-neutral-900: #1a1a1a;
+    --fge-color-white: #ffffff;
 
-  /* Neutrales */
-  --fge-color-neutral-100: #fafafa;
-  --fge-color-neutral-400: #a09fa2;
-  --fge-color-neutral-600: #706e78;
-  --fge-color-neutral-900: #1a1a1a;
-  --fge-color-white: #ffffff;
+    /* -----------------------------------------
+       B. Tokens de Color — Semántico / Funcional
+    -----------------------------------------------*/
+    /* Marca & Identidad */
+    --fge-color-brand-primary: var(--fge-color-purple-base);
+    --fge-color-brand-hover: var(--fge-color-purple-700);
+    --fge-color-brand-dark: var(--fge-color-purple-950);
 
-  /* -----------------------------------------
-     B. Tokens de Color - Semántico / Funcional 
-  -----------------------------------------------*/
-  /* Marca & Identidad */
-  --fge-color-brand-primary: var(--fge-color-purple-base);
-  --fge-color-brand-hover: var(--fge-color-purple-700);
-  --fge-color-brand-dark: var(--fge-color-purple-950);
+    /* Superficies & Fondos */
+    --fge-color-bg-main: var(--fge-color-neutral-100);
+    --fge-color-bg-surface: var(--fge-color-neutral-100);
+    --fge-color-bg-accent-cyan: var(--fge-color-cyan-base);
+    --fge-color-bg-accent-green: var(--fge-color-green-base);
 
-  /* Superficies & Fondos */
-  --fge-color-bg-main: var(--fge-color-neutral-100);
-  --fge-color-bg-surface: var(--fge-color-neutral-100);
-  --fge-color-bg-accent-cyan: var(--fge-color-cyan-base);
-  --fge-color-bg-accent-green: var(--fge-color-green-base);
+    /* Textos & Iconografía */
+    --fge-color-text-main: var(--fge-color-neutral-900);
+    --fge-color-text-muted: var(--fge-color-neutral-600);
+    --fge-color-text-inverse: var(--fge-color-white);
 
-  /* Textos & Iconografía */
-  --fge-color-text-main: var(--fge-color-neutral-900);
-  --fge-color-text-muted: var(--fge-color-neutral-600);
-  --fge-color-text-inverse: var(--fge-color-white);
+    /* Acciones & Destacados (CTA / Botones) */
+    --fge-color-action-primary: var(--fge-color-pink-base);
+    --fge-color-action-primary-hover: var(--fge-color-pink-hover);
+    --fge-color-action-donate: var(--fge-color-pink-base);
+    --fge-color-border-subtle: var(--fge-color-neutral-400);
 
-  /* Acciones & Destacados (CTA / Botones) */
-  --fge-color-action-primary: var(--fge-color-pink-base);
-  --fge-color-action-primary-hover: var(--fge-color-pink-hover);
-  --fge-color-action-donate: var(--fge-color-pink-base);
-  --fge-color-border-subtle: var(--fge-color-neutral-400);
+    /* -----------------------------------------
+       C. Tipografía (Envolventa + Lato)
+    -----------------------------------------------*/
+    /* Familias Tipográficas del Manual de Marca */
+    --fge-font-family-headings: 'Envolventa', sans-serif; /* Títulos y Destacados */
+    --fge-font-family-base: 'Lato', sans-serif; /* Textos / Cuerpo */
 
-  /* -----------------------------------------
-     C. Tipografía (Envolventa + Lato)
-  -----------------------------------------------*/
-  /* Familias Tipográficas del Manual de Marca */
-  --fge-font-family-headings: 'Envolventa', sans-serif; /* Para Títulos y Destacados */
-  --fge-font-family-base: 'Lato', sans-serif; /* Para Textos / Cuerpo */
+    /* Escala Tipográfica (Minor Third - Base 16px) */
+    --fge-font-size-sm: 0.833rem; /* ~13.3px */
+    --fge-font-size-base: 1rem; /*  16px   */
+    --fge-font-size-lg: 1.2rem; /* ~19.2px */
+    --fge-font-size-xl: 1.44rem; /* ~23px   */
+    --fge-font-size-2xl: 1.728rem; /* ~27.6px */
+    --fge-font-size-3xl: 2.074rem; /* ~33.2px */
+    --fge-font-size-4xl: 2.488rem; /* ~39.8px */
+    --fge-font-size-5xl: 2.986rem; /* ~47.8px */
 
-  /* Escala Tipográfica (Minor Third - Base 16px) */
-  --fge-font-size-sm: 0.833rem; /* ~13.3px */
-  --fge-font-size-base: 1rem; /*  16px   */
-  --fge-font-size-lg: 1.2rem; /* ~19.2px */
-  --fge-font-size-xl: 1.44rem; /* ~23px   */
-  --fge-font-size-2xl: 1.728rem; /* ~27.6px */
-  --fge-font-size-3xl: 2.074rem; /* ~33.2px */
-  --fge-font-size-4xl: 2.488rem; /* ~39.8px */
-  --fge-font-size-5xl: 2.986rem; /* ~47.8px */
+    /* Pesos y Alturas de Línea */
+    --fge-font-weight-regular: 400;
+    --fge-font-weight-bold: 700;
+    --fge-line-height-tight: 1.2;
+    --fge-line-height-base: 1.5;
 
-  /* Pesos y Alturas de Línea */
-  --fge-font-weight-regular: 400;
-  --fge-font-weight-bold: 700;
-  --fge-line-height-tight: 1.2;
-  --fge-line-height-base: 1.5;
+    /* -----------------------------------------
+       D. Espaciado y Geometría (Escala de 8px / Rem)
+    -----------------------------------------------*/
+    --fge-space-3xs: 0.125rem; /* 2px  */
+    --fge-space-2xs: 0.25rem; /* 4px  */
+    --fge-space-xs: 0.5rem; /* 8px  */
+    --fge-space-sm: 0.75rem; /* 12px */
+    --fge-space-md: 1rem; /* 16px */
+    --fge-space-lg: 1.5rem; /* 24px */
+    --fge-space-xl: 2rem; /* 32px */
+    --fge-space-2xl: 3rem; /* 48px */
+    --fge-space-3xl: 4.5rem; /* 72px */
 
-  /* -----------------------------------------
-     D. Espaciado y Geometría (Escala de 8px / Rem)
-  -----------------------------------------------*/
-  --fge-space-3xs: 0.125rem; /* 2px  */
-  --fge-space-2xs: 0.25rem; /* 4px  */
-  --fge-space-xs: 0.5rem; /* 8px  */
-  --fge-space-sm: 0.75rem; /* 12px */
-  --fge-space-md: 1rem; /* 16px */
-  --fge-space-lg: 1.5rem; /* 24px */
-  --fge-space-xl: 2rem; /* 32px */
-  --fge-space-2xl: 3rem; /* 48px */
-  --fge-space-3xl: 4.5rem; /* 72px */
+    /* Radios de Curvatura (Bordes) */
+    --fge-radius-sm: 0.25rem; /* 4px  */
+    --fge-radius-md: 0.5rem; /* 8px  */
+    --fge-radius-lg: 1rem; /* 16px */
+    --fge-radius-pill: 50rem; /* Redondeado completo */
 
-  /* Radios de Curvatura (Bordes) */
-  --fge-radius-sm: 0.25rem; /* 4px  */
-  --fge-radius-md: 0.5rem; /* 8px  */
-  --fge-radius-lg: 1rem; /* 16px */
-  --fge-radius-pill: 50rem; /* Redondeado completo */
+    /* Transiciones y Sombras */
+    --fge-transition-base: all 0.3s ease-in-out;
+    --fge-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --fge-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-  /* Transiciones y Sombras */
-  --fge-transition-base: all 0.3s ease-in-out;
-  --fge-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --fge-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* -----------------------------------------
+       E. Grilla Figma (sistema de layout sobre Bootstrap)
+    -----------------------------------------------*/
+    --fge-grid-gutter: 1.5rem; /* 24px */
+    --fge-grid-margin-desktop: 5rem; /* 80px */
+    --fge-grid-margin-mobile: 1rem; /* 16px (pantallas chicas) */
+  }
 }
 
 /* ==========================================================================
-   2. GENERICS & RESETS (Accesibilidad & WCAG 2.2)
+   LAYER fge.base — 2. GENERICS & RESETS + 3. BASE & ELEMENTS
    ========================================================================== */
+@layer fge.base {
+  /* --- 2. Generics: foco visible para navegación por teclado
+         (WCAG 2.4.7 y 2.4.13) --- */
+  a:focus-visible,
+  button:focus-visible,
+  .btn-fge:focus-visible,
+  .fge-topbar-paises__toggle:focus-visible,
+  .nav-link-fge:focus-visible {
+    outline: 3px solid var(--fge-color-brand-primary);
+    outline-offset: 3px;
+    border-radius: var(--fge-radius-sm);
+  }
 
-/* Foco visible mejorado para navegación por teclado (WCAG 2.4.7 y 2.4.13) */
-a:focus-visible,
-button:focus-visible,
-.btn-fge:focus-visible,
-.country-select-fge:focus-visible,
-.nav-link-fge:focus-visible {
-  outline: 3px solid var(--fge-color-brand-primary);
-  outline-offset: 3px;
-  border-radius: var(--fge-radius-sm);
+  /* --- 3. Base: cuerpo (Lato) --- */
+  body {
+    font-family: var(--fge-font-family-base);
+    font-size: var(--fge-font-size-base);
+    line-height: var(--fge-line-height-base);
+    color: var(--fge-color-text-main);
+    background-color: var(--fge-color-bg-main);
+  }
+
+  /* Encabezados (Envolventa). En capa gana a los headings de bootstrap
+     layer por orden de declaraciones  → SIN !important (antes lo usaba
+     porque la cascade lo pedía con Bootstrap sin encapsular). */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    font-family: var(--fge-font-family-headings);
+    font-weight: var(--fge-font-weight-bold);
+    line-height: var(--fge-line-height-tight);
+    color: var(--fge-color-brand-primary);
+    margin-bottom: var(--fge-space-sm);
+  }
+
+  /* Escala Jerárquica Aplicada a Etiquetas HTML */
+  h1 {
+    font-size: var(--fge-font-size-5xl);
+  }
+  h2 {
+    font-size: var(--fge-font-size-4xl);
+  }
+  h3 {
+    font-size: var(--fge-font-size-3xl);
+  }
+  h4 {
+    font-size: var(--fge-font-size-2xl);
+  }
+  h5 {
+    font-size: var(--fge-font-size-xl);
+  }
+  h6 {
+    font-size: var(--fge-font-size-lg);
+  }
+
+  /* Párrafos y Enlaces Base */
+  p {
+    margin-bottom: var(--fge-space-md);
+  }
+
+  a {
+    color: var(--fge-color-brand-primary);
+    text-decoration: none;
+    transition: var(--fge-transition-base);
+  }
+
+  a:hover {
+    color: var(--fge-color-brand-hover);
+  }
 }
 
 /* ==========================================================================
-   3. BASE & ELEMENTS
+   LAYER fge.components — 4. ATOMS → 5. MOLECULES → 6. ORGANISMS
+   Orden interno: atoms → molecules → organisms, siguiendo la composición
+   del shell global (includes/header + footer).
    ========================================================================== */
+@layer fge.components {
+  /* ==========================================================================
+     4. ATOMS
+     ========================================================================== */
 
-/* Configuración del Cuerpo (Lato) */
-body {
-  font-family: var(--fge-font-family-base);
-  font-size: var(--fge-font-size-base);
-  line-height: var(--fge-line-height-base);
-  color: var(--fge-color-text-main);
-  background-color: var(--fge-color-bg-main);
-}
+  /* --- 4.1 Botones (.btn-fge) --- */
+  .btn-fge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fge-space-xs);
+    padding: var(--fge-space-sm) var(--fge-space-lg);
+    min-height: 48px;
+    font-family: var(--fge-font-family-base);
+    font-size: var(--fge-font-size-base);
+    font-weight: var(--fge-font-weight-bold);
+    line-height: 1.2;
+    text-decoration: none;
+    border-radius: var(--fge-radius-md);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
 
-/* Regla Base para Encabezados (Envolventa) con Sobrescritura de Bootstrap */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  font-family: var(--fge-font-family-headings) !important;
-  font-weight: var(--fge-font-weight-bold);
-  line-height: var(--fge-line-height-tight);
-  color: var(--fge-color-brand-primary);
-  margin-bottom: var(--fge-space-sm);
-}
+  /* Botón Principal (CTA de Marca) */
+  .btn-fge--primary {
+    background-color: var(--fge-color-action-primary);
+    color: var(--fge-color-white);
+  }
 
-/* Escala Jerárquica Aplicada a Etiquetas HTML */
-h1 {
-  font-size: var(--fge-font-size-5xl);
-}
-h2 {
-  font-size: var(--fge-font-size-4xl);
-}
-h3 {
-  font-size: var(--fge-font-size-3xl);
-}
-h4 {
-  font-size: var(--fge-font-size-2xl);
-}
-h5 {
-  font-size: var(--fge-font-size-xl);
-}
-h6 {
-  font-size: var(--fge-font-size-lg);
-}
+  .btn-fge--primary:hover {
+    background-color: var(--fge-color-action-primary-hover);
+    color: var(--fge-color-white);
+  }
 
-/* Párrafos y Enlaces Base */
-p {
-  margin-bottom: var(--fge-space-md);
-}
+  /* Botón Secundario (Outline / Acento) */
+  .btn-fge--secondary {
+    background-color: transparent;
+    color: var(--fge-color-brand-primary);
+    border-color: var(--fge-color-brand-primary);
+  }
 
-a {
-  color: var(--fge-color-brand-primary);
-  text-decoration: none;
-  transition: var(--fge-transition-base);
-}
+  .btn-fge--secondary:hover {
+    background-color: var(--fge-color-brand-primary);
+    color: var(--fge-color-white);
+  }
 
-a:hover {
-  color: var(--fge-color-brand-hover);
-}
+  /* --- 4.2 Badges (.badge-fge) --- */
+  .badge-fge {
+    display: inline-block;
+    padding: var(--fge-space-2xs) var(--fge-space-sm);
+    font-family: var(--fge-font-family-base);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--fge-radius-pill);
+    background-color: var(--fge-color-accent-soft, #eef7f6); /* deuda: token */
+    color: var(--fge-color-brand-primary);
+  }
 
-/* ==========================================================================
-   4. ATOMS
-   ========================================================================== */
+  /* Badges de país y chips suaves compartidos (un solo diseño en varios
+     contextos — lo que cambia es la data) */
+  .badge-fge--pais {
+    background-color: var(--fge-color-brand-primary);
+    color: var(--fge-color-white);
+  }
 
-/* --- 4.1 BOTONES (.btn-fge) --- */
-.btn-fge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--fge-space-xs, 8px);
-  padding: var(--fge-space-sm) var(--fge-space-lg);
-  min-height: 48px;
-  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
-  font-size: var(--fge-font-size-base);
-  font-weight: 700;
-  line-height: 1.2;
-  text-decoration: none;
-  border-radius: var(--fge-radius-md, 8px);
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
+  .badge-fge--soft {
+    background-color: #ececee; /* deuda: --fge-color-neutral-200 */
+    color: var(--fge-color-brand-primary);
+  }
 
-/* Botón Principal (CTA de Marca) */
-.btn-fge--primary {
-  background-color: var(--fge-color-action-primary);
-  color: var(--fge-color-white);
-}
+  /* --- 4.3 Links de navegación (.nav-link-fge) --- */
+  .nav-link-fge {
+    font-family: var(--fge-font-family-base);
+    font-size: var(--fge-font-size-base);
+    font-weight: 600;
+    color: var(--fge-color-text-main);
+    text-decoration: none;
+    position: relative;
+    padding: 6px 4px;
+    min-height: 32px; /* Garantiza área táctil adecuada */
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+  }
 
-.btn-fge--primary:hover {
-  background-color: var(--fge-color-action-primary-hover);
-  color: var(--fge-color-white);
-}
+  .nav-link-fge:hover,
+  .nav-link-fge--active {
+    color: var(--fge-color-action-primary);
+  }
 
-/* Botón Secundario (Outline / Acento) */
-.btn-fge--secondary {
-  background-color: transparent;
-  color: var(--fge-color-brand-primary);
-  border-color: var(--fge-color-brand-primary);
-}
+  /* Subrayado animado al pasar el cursor */
+  .nav-link-fge::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--fge-color-action-primary);
+    transition: width 0.2s ease;
+  }
 
-.btn-fge--secondary:hover {
-  background-color: var(--fge-color-brand-primary);
-  color: var(--fge-color-white);
-}
+  .nav-link-fge:hover::after,
+  .nav-link-fge--active::after {
+    width: 100%;
+  }
 
-/* Utilidades de marca: colores de headings según Figma (MCP) —
-   H1 páginas internas (#383165) y títulos de sección / enlaces de
-   documentos (#4c4688) */
-.text-brand-primary {
-  color: var(--fge-color-brand-primary) !important;
-}
+  /* --- 4.4 Íconos (Bootstrap Icons) como átomo --- */
+  .icon-fge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    line-height: 1;
+  }
 
-.text-brand-purple-800 {
-  color: var(--fge-color-purple-800) !important;
-}
+  /* ==========================================================================
+     5. MOLECULES
+     ========================================================================== */
 
-/* --- 4.2 BADGES (.badge-fge) --- */
-.badge-fge {
-  display: inline-block;
-  padding: 4px 12px;
-  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 50px;
-  background-color: var(--fge-color-accent-soft, #eef7f6);
-  color: var(--fge-color-brand-primary, #4c4688);
-}
-
-/* --- 4.3 LINKS DE NAVEGACIÓN (.nav-link-fge) --- */
-.nav-link-fge {
-  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--fge-color-text-main, #2b2b2b);
-  text-decoration: none;
-  position: relative;
-  padding: 6px 4px;
-  min-height: 32px; /* Garantiza área táctil adecuada */
-  display: inline-flex;
-  align-items: center;
-  transition: color 0.2s ease;
-}
-
-.nav-link-fge:hover,
-.nav-link-fge--active {
-  color: var(--fge-color-action-primary);
-}
-
-/* Subrayado animado al pasar el cursor */
-.nav-link-fge::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: var(--fge-color-action-primary);
-  transition: width 0.2s ease;
-}
-
-.nav-link-fge:hover::after,
-.nav-link-fge--active::after {
-  width: 100%;
-}
-
-/* --- 4.4 ÍCONOS (BOOTSTRAP ICONS) Y SELECTOR DE PAÍS --- */
-
-/* Estilo base para íconos de Bootstrap usados como átomos */
-.icon-fge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1em;
-  line-height: 1;
-}
-
-/* Selector de País */
-.country-select-fge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--fge-font-family-base, 'Lato', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--fge-color-text-);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px 10px;
-  min-height: 36px; /* Garantiza área táctil (Target Size WCAG) */
-  border-radius: var(--fge-radius-sm, 4px);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.country-select-fge:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: var(--fge-color-action-primary);
-}
-
-/* Animación del chevron/flecha al desplegar */
-.country-select-fge__icon {
-  font-size: 0.8rem;
-  transition: transform 0.2s ease;
-}
-
-.country-select-fge[aria-expanded='true'] .country-select-fge__icon {
-  transform: rotate(180deg);
-}
-
-/* ==========================================================================
-   6. ORGANISMS - Topbar (.topbar-fge)
-   ========================================================================== */
-
-.topbar-fge {
-  background-color: var(--fge-color-purple-950);
-  color: var(--fge-color-text-inverse);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: var(--fge-font-size-sm);
-  padding: var(--fge-space-2xs) 0;
-}
-
-.topbar-fge__container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* 2. MOLÉCULA: Selector de País (.country-dropdown-fge) */
-.country-dropdown-fge {
-  position: relative;
-}
-
-.country-dropdown-fge__toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--fge-space-xs);
-  padding: var(--fge-space-2xs) var(--fge-space-xs);
-  min-height: 36px;
-  font-family: var(--fge-font-family-base);
-  font-size: var(--fge-font-size-base);
-  font-weight: var(--fge-font-weight-regular);
-  color: var(--fge-color-text-inverse);
-  background: transparent;
-  border: none;
-  border-radius: var(--fge-radius-sm);
-  cursor: pointer;
-  transition: var(--fge-transition-base);
-}
-
-.country-dropdown-fge__toggle:hover {
-  color: var(--fge-color-action-primary);
-}
-
-.country-dropdown-fge__chevron {
-  font-size: var(--fge-font-size-sm);
-  transition: transform 0.2s ease;
-}
-
-.country-dropdown-fge__toggle[aria-expanded='true'] .country-dropdown-fge__chevron {
-  transform: rotate(180deg);
-}
-
-/* Modificación sobre el Dropdown Menu de Bootstrap */
-.country-dropdown-fge__menu {
-  background-color: var(--fge-color-bg-surface);
-  border: 1px solid var(--fge-color-border-subtle);
-  border-radius: var(--fge-radius-md);
-  box-shadow: var(--fge-shadow-md);
-  margin-top: var(--fge-space-2xs);
-  padding: var(--fge-space-2xs) 0;
-  min-width: 140px;
-}
-
-.country-dropdown-fge__item {
-  color: var(--fge-color-text-main);
-  font-size: var(--fge-font-size-base);
-  padding: var(--fge-space-xs) var(--fge-space-md);
-  transition: background-color 0.2s ease;
-}
-
-.country-dropdown-fge__item:hover,
-.country-dropdown-fge__item:focus {
-  background-color: var(--fge-color-action-primary);
-  color: var(--fge-color-neutral-100);
-}
-
-.country-dropdown-fge__item--active {
-  font-weight: var(--fge-font-weight-bold);
-  color: var(--fge-color-brand-primary);
-}
-
-/* 3. MOLÉCULA: Redes Sociales (.topbar-fge__socials) */
-.topbar-fge__socials {
-  display: none; /* Oculto en móvil por defecto */
-}
-
-@media (min-width: 768px) {
+  /* --- 5.1 Molécula: Redes Sociales (futura zona de widgets) --- */
   .topbar-fge__socials {
+    display: none; /* Oculto en móvil por defecto */
+  }
+
+  @media (min-width: 768px) {
+    .topbar-fge__socials {
+      display: block;
+    }
+  }
+
+  .topbar-fge__social-list {
+    display: flex;
+    align-items: center;
+    gap: var(--fge-space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topbar-fge__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--fge-color-neutral-100);
+    border-radius: var(--fge-radius-pill);
+    transition: var(--fge-transition-base);
+  }
+
+  .topbar-fge__social-link:hover {
+    color: var(--fge-color-action-primary);
+  }
+
+  /* --- 5.2 Molécula: Testimonio (hover overlay)
+     Ubicación: home (destacados internacionales) y page-pais (taxonomía).
+     Mismo diseño en ambos contextos; cambia solo la consulta. --- */
+  .card-testimonio-fge {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--fge-radius-md);
+    aspect-ratio: 1 / 1; /* cuadrado, según Figma */
+    background-color: var(--fge-color-bg-surface);
     display: block;
   }
-}
 
-.topbar-fge__social-list {
-  display: flex;
-  align-items: center;
-  gap: var(--fge-space-md);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+  /* Estado sin foto (is-placeholder): fondo de imagen-provisional más
+     perceptible que la superficie de la tarjeta (mockup: tarjeta gris + ícono) */
+  .card-testimonio-fge.is-placeholder {
+    background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
+  }
 
-.topbar-fge__social-link {
-  display: inline-flex;
-  align-items: center;
-  font-size: var(--fge-font-size-xl);
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  color: var(--fge-color-neutral-100);
-  border-radius: var(--fge-radius-pill);
-  transition: var(--fge-transition-base);
-}
+  .card-testimonio-fge__foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.topbar-fge__social-link:hover {
-  color: var(--fge-color-action-primary);
-  background-color: var(--fge-color-bg-surface);
-}
+  /* Placeholder cuando no hay foto (src vacío) */
+  .card-testimonio-fge__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fge-color-text-muted);
+  }
 
-/* ==========================================================================
-   7. UTILITIES & OVERRIDES (Sobrescritura Grilla Figma: Margen 80px / Gutter 24px)
-   ========================================================================== */
+  /* Overlay del testimonio (estado hover): tarjeta purple-900 con texto
+     blanco, según Figma. Oculto por defecto, visible en hover/focus.
+     🔑 DECISIÓN DEL CLIENTE (no tocar sin OK): el Figma landing muestra el
+     hover como tarjeta BLANCA con cita en recuadro con borde (#4c4688), pero
+     la sección país lo muestra morado. Es una inconsistencia del archivo
+     Figma; el cliente eligió UNIFICAR en morado con letras blancas en
+     ambos contextos (diseño único). Verificado con Figma MCP (vertex
+     478:4737 landing vs sección país). */
+  .card-testimonio-fge__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--fge-color-purple-900);
+    color: var(--fge-color-text-inverse);
+    padding: var(--fge-space-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--fge-space-xs);
+    opacity: 0;
+    transition: opacity var(--fge-transition-base);
+  }
 
-/* 1. Definición de Variables de Grilla */
-:root {
-  --fge-grid-gutter: 1.5rem; /* 24px en Rem */
-  --fge-grid-margin-desktop: 5rem; /* 80px en Rem */
-  --fge-grid-margin-mobile: 1rem; /* 16px para adaptar a pantallas chicas */
-}
+  .card-testimonio-fge:hover .card-testimonio-fge__overlay,
+  .card-testimonio-fge:focus-within .card-testimonio-fge__overlay {
+    opacity: 1;
+  }
 
-/* 2. Ajuste de Contenedores y Filas */
-.container,
-.container-fluid {
-  --bs-gutter-x: var(--fge-grid-gutter);
-  padding-right: var(--fge-grid-margin-mobile);
-  padding-left: var(--fge-grid-margin-mobile);
-  max-width: 100%;
-}
+  /* Overlay accesible sin hover (táctiles): el focus del overlay hace
+     visible el contenido */
+  .card-testimonio-fge__overlay:focus {
+    opacity: 1;
+    outline: none;
+  }
 
-.row {
-  --bs-gutter-x: var(--fge-grid-gutter);
-}
+  .card-testimonio-fge__nombre {
+    font-family: var(--fge-font-family-headings);
+    font-size: var(--fge-font-size-sm);
+    font-weight: var(--fge-font-weight-bold);
+    color: var(--fge-color-text-inverse);
+    margin: 0;
+  }
 
-/* 3. Ajuste Responsive para Escritorio (Márgenes de 80px) */
-@media (min-width: 992px) {
-  .container,
-  .container-fluid {
-    padding-right: var(--fge-grid-margin-desktop); /* 80px */
-    padding-left: var(--fge-grid-margin-desktop); /* 80px */
+  .card-testimonio-fge__cita {
+    font-size: var(--fge-font-size-xs, 0.65rem); /* deuda: token */
+    line-height: var(--fge-line-height-base);
+    font-style: italic;
+    color: var(--fge-color-text-inverse);
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  /* --- 5.3 Molécula: Directivo (gobernanza)
+     Ubicación: page-transparencia (futuro CPT equipo).
+     Specs Figma 478:4016+ (MCP): tarjeta border #e0e0e0 radius 8; foto
+     368×500 radius 8; cargo/nombre Lato 16 (#616161 / #212121); fila de
+     3 iconos 39px con gap 16. --- */
+  .card-directivo-fge {
+    border: 1px solid var(--fge-color-border-subtle);
+    border-radius: var(--fge-radius-md);
+    background-color: var(--fge-color-bg-surface);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--fge-space-sm);
+  }
+
+  .card-directivo-fge__foto {
+    width: 100%;
+    height: 0;
+    padding-bottom: 128%; /* proporción foto del wireframe: 468/500 ≈ 368×500 */
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--fge-radius-md);
+    background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
+  }
+
+  .card-directivo-fge__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-directivo-fge__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fge-color-text-muted);
+  }
+
+  .card-directivo-fge__textos {
+    padding: var(--fge-space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--fge-space-xs);
+  }
+
+  .card-directivo-fge__cargo {
+    color: var(--fge-color-text-muted); /* deuda #616161 */
+    font-size: var(--fge-font-size-base);
+    margin: 0;
+  }
+
+  .card-directivo-fge__nombre {
+    color: var(--fge-color-neutral-900); /* deuda #212121 */
+    font-size: var(--fge-font-size-base);
+    margin: 0;
+  }
+
+  .card-directivo-fge__iconos {
+    display: flex;
+    gap: var(--fge-space-md); /* 16px (Figma) */
+    margin-top: var(--fge-space-sm);
+  }
+
+  .card-directivo-fge__iconos a {
+    display: inline-flex;
+    transition: transform var(--fge-transition-base);
+  }
+
+  .card-directivo-fge__iconos a:hover {
+    transform: scale(1.1);
+  }
+
+  /* --- 5.4 Molécula: Tabs de documentos (Transparencia)
+     Tab inactivo: fondo neutral-100, borde sutil, texto muted.
+     Tab activo: superficie blanca (continúa con el panel), texto principal. --- */
+  .nav-tabs-doc-fge {
+    gap: var(--fge-space-2xs);
+  }
+
+  .nav-tabs-doc-fge .nav-link {
+    color: var(--fge-color-text-muted);
+    background-color: var(--fge-color-neutral-100);
+    border: 1px solid var(--fge-color-border-subtle);
+    border-radius: var(--fge-radius-sm) var(--fge-radius-sm) 0 0;
+    font-weight: var(--fge-font-weight-semibold, 600); /* deuda: token */
+    font-size: var(--fge-font-size-sm);
+  }
+
+  .nav-tabs-doc-fge .nav-link.active,
+  .nav-tabs-doc-fge .nav-link:hover {
+    color: var(--fge-color-text-main);
+    background-color: var(--fge-color-bg-surface);
+    border-bottom-color: transparent;
+  }
+
+  .tab-content-doc-fge {
+    border: 1px solid var(--fge-color-border-subtle);
+    border-radius: 0 0 var(--fge-radius-md) var(--fge-radius-md);
+    background-color: var(--fge-color-bg-surface);
+    min-height: 140px; /* registro del mockup: evita paneles enanos */
+  }
+
+  /* --- 5.5 Moléculas de "Qué hacemos" (page-que-hacemos;
+     Figma 478:2771 + mockup que-hacemos.html).
+     Normalización de color: el mockup usaba success/info/danger y fondos
+     light-gray fuera de paleta → familia morada + grises del sistema. --- */
+
+  /* card-dimension */
+  .card-dimension-fge__icono {
+    width: 40px;
+    height: 40px;
+    background-color: var(--fge-color-bg-surface);
+    color: var(--fge-color-brand-primary);
+  }
+
+  .card-dimension-fge__titulo {
+    color: var(--fge-color-brand-primary);
+  }
+
+  .card-dimension-fge__texto {
+    color: var(--fge-color-text-muted);
+  }
+
+  /* programa-fila */
+  .programa-fila-fge__chip {
+    border-color: #e0e0e0; /* deuda: --fge-color-neutral-300 */
+  }
+
+  .programa-fila-fge__imagen {
+    background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
+    border-color: #e0e0e0; /* deuda: --fge-color-neutral-300 */
+    color: var(--fge-color-text-muted);
+    position: relative;
+  }
+
+  /* card-caso-org */
+  .card-caso-org-fge__visual {
+    background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
+  }
+
+  .card-caso-org-fge__visual + h3 {
+    color: var(--fge-color-brand-primary);
+  }
+
+  /* --- 5.6 Moléculas de Alianzas (page-alianzas; Figma 478:3634)
+     Normalización: números/eyebrow del mockup en danger/info/success → morado. --- */
+  .paso-proceso-fge__numero {
+    color: var(--fge-color-brand-primary);
+  }
+
+  .pilar-alianza-fge__eyebrow {
+    color: var(--fge-color-brand-primary);
+  }
+
+  /* Pills radio del form: seleccionar = fondo de marca */
+  .form-alianza-fge__pill:hover,
+  input:checked + .form-alianza-fge__pill {
+    background-color: var(--fge-color-brand-primary);
+    border-color: var(--fge-color-brand-primary);
+    color: var(--fge-color-white);
+  }
+
+  /* ==========================================================================
+     6. ORGANISMS (en el orden del shell: topbar → footer → página)
+     ========================================================================== */
+
+  /* --- 6.1 Topbar de países (.fge-topbar-paises)
+     Correspondencia 1:1 con components/organisms/topbar-paises.php. --- */
+
+  /* 🔑 FIX z-index: el navbar sticky-top de Bootstrap crea un stacking
+     context en 1020; el dropdown-menu del topbar queda en su 1000 default
+     y pasaba POR DEBAJO del nav. Contexto de apilamiento above navbar: */
+  .fge-topbar-paises {
+    position: relative;
+    z-index: 1035;
+  }
+
+  /* Toggle del selector: estado base = blanco al 75% (antes lo proveían
+     `opacity-75 opacity-100-hover`, utilidades del mockup que NO existen
+     en este sistema → hover sin efecto). Hover/focus = blanco pleno +
+     fondo translúcido (feedback de superficie afinada al sistema). */
+  .fge-topbar-paises__toggle {
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: var(--fge-radius-sm);
+    padding: var(--fge-space-3xs) var(--fge-space-xs);
+    min-height: 32px; /* área táctil */
+    transition: var(--fge-transition-base);
+  }
+
+  .fge-topbar-paises__toggle:hover,
+  .fge-topbar-paises__toggle:focus,
+  .fge-topbar-paises__toggle[aria-expanded='true'] {
+    color: var(--fge-color-text-inverse);
+    background-color: rgba(255, 255, 255, 0.1);
+    outline: none;
+  }
+
+  /* Items del dropdown: hover con acento de acción (antes era el
+     dropdown-item gris por default de Bootstrap, estilo de otro sistema) */
+  .fge-topbar-paises .dropdown-item {
+    font-size: var(--fge-font-size-sm);
+    padding: var(--fge-space-xs) var(--fge-space-md);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .fge-topbar-paises .dropdown-item:hover,
+  .fge-topbar-paises .dropdown-item:focus {
+    background-color: var(--fge-color-action-primary);
+    color: var(--fge-color-white);
+  }
+
+  /* --- 6.2 Footer (footer-fge.php)
+     Enlaces del footer sobre superficie morada: antes text-white-50 sin
+     hover definido → "hover esfumado". Tokens: texto inverso secundario
+     → blanco pleno. --- */
+  .footer-fge__link {
+    color: rgba(255, 255, 255, 0.6); /* reemplaza text-white-50 */
+    transition: var(--fge-transition-base);
+  }
+
+  .footer-fge__link:hover,
+  .footer-fge__link:focus {
+    color: var(--fge-color-text-inverse);
+  }
+
+  /* --- 6.3 Organismo: Mapa ubicación (page-que-hacemos) --- */
+  .mapa-ubicacion-fge__visual {
+    background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
+    border-color: #e0e0e0; /* deuda: --fge-color-neutral-300 */
+    position: relative;
+  }
+
+  /* --- 6.4 Página Donación: selector de país (selector-pais.php).
+     Estado seleccionado sin CSS inline en el markup — la clase consume
+     el token semántico. --- */
+  .selector-pais__card--seleccionada {
+    border-color: var(--fge-color-brand-primary);
+  }
+
+  /* --- 6.5 Página Noticias (page-noticias + page-noticia;
+     noticia-grilla.html) --- */
+  .btn-filter-notifica {
+    color: var(--fge-color-text-main);
+    background-color: var(--fge-color-bg-surface);
+    border: 1px solid var(--fge-color-border-subtle);
+    font-size: var(--fge-font-size-xs, 0.75rem); /* deuda: token */
+    font-weight: 600;
+    border-radius: var(--fge-radius-sm);
+  }
+
+  .btn-filter-notifica--activo,
+  .btn-filter-notifica:not(.disabled):hover {
+    color: var(--fge-color-white);
+    background-color: var(--fge-color-brand-primary);
+    border-color: var(--fge-color-brand-primary);
+  }
+
+  /* Cita destacada del artículo single */
+  .articulo-noticia-fge blockquote {
+    border-left-color: var(--fge-color-border-subtle);
   }
 }
 
 /* ==========================================================================
-   6.2 Molécula: Testimonio (hover overlay)
-   Ubicación: home (destacados internacionales) y page-pais (por taxonomía).
-   Mismo diseño en ambos contextos; cambia solo la consulta.
+   LAYER fge.utilities — 7. UTILITIES & OVERRIDES
+   Clases puntuales del sistema + ajustes de layout sobre Bootstrap.
    ========================================================================== */
+@layer fge.utilities {
+  /* --- 7.1 Grilla Figma sobre contenedores/filas de Bootstrap
+     (Margen 80px desktop / 16px mobile — Gutter 24px) --- */
+  .container,
+  .container-fluid {
+    --bs-gutter-x: var(--fge-grid-gutter);
+    padding-right: var(--fge-grid-margin-mobile);
+    padding-left: var(--fge-grid-margin-mobile);
+    max-width: 100%;
+  }
 
-.card-testimonio-fge {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--fge-radius-md);
-  aspect-ratio: 1 / 1; /* cuadrado, según Figma */
-  background-color: var(--fge-color-bg-surface);
-  display: block;
-}
+  .row {
+    --bs-gutter-x: var(--fge-grid-gutter);
+  }
 
-/* Estado sin foto (is-placeholder): fondo de imagen-provisional más
-   perceptible que la superficie de la tarjeta (match con mockup:
-   tarjeta gris + ícono) */
-.card-testimonio-fge.is-placeholder {
-  background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
-}
+  /* Ajuste Responsive para Escritorio (Márgenes de 80px) */
+  @media (min-width: 992px) {
+    .container,
+    .container-fluid {
+      padding-right: var(--fge-grid-margin-desktop); /* 80px */
+      padding-left: var(--fge-grid-margin-desktop); /* 80px */
+    }
+  }
 
-.card-testimonio-fge__foto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  /* --- 7.2 Colores de marca aplicados a textos (Figma MCP):
+     H1 páginas internas (#383165) y títulos de sección / enlaces de
+     documentos (#4c4688) --- */
+  .text-brand-primary {
+    color: var(--fge-color-brand-primary);
+  }
 
-/* Placeholder cuando no hay foto (src vacío) */
-.card-testimonio-fge__placeholder {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--fge-color-text-muted);
-}
+  .text-brand-purple-800 {
+    color: var(--fge-color-purple-800);
+  }
 
-/* Overlay del testimonio (estado hover): tarjeta purple-900 con texto
-   blanco, según Figma. Oculto por defecto, visible en hover/focus.
-   🔑 DECISIÓN DEL CLIENTE (no tocar sin OK): el Figma landing muestra el
-   hover como tarjeta BLANCA con cita en recuadro con borde (#4c4688), pero
-   la sección país lo muestra morado. Es una inconsistencia del archivo
-   Figma; el cliente eligió UNIFICAR en morado con letras blancas en
-   ambos contextos (diseño único). Verificado con Figma MCP (vertex
-   478:4737 landing vs sección país). */
-.card-testimonio-fge__overlay {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background-color: var(--fge-color-purple-900);
-  color: var(--fge-color-text-inverse);
-  padding: var(--fge-space-md);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--fge-space-xs);
-  opacity: 0;
-  transition: opacity var(--fge-transition-base);
-}
+  /* --- 7.3 Superficies de marca (mudadas de bridge.css — cierre de
+     páginas): purple-950 = navy del mockup normalizada al sistema;
+     neutral-200 = gris de placeholders (#f0f0f0) con deuda de token. --- */
+  .bg-purple-950 {
+    background-color: var(--fge-color-purple-900);
+  }
 
-.card-testimonio-fge:hover .card-testimonio-fge__overlay,
-.card-testimonio-fge:focus-within .card-testimonio-fge__overlay {
-  opacity: 1;
-}
+  .bg-neutral-200 {
+    background-color: #f0f0f0; /* deuda: crear --fge-color-neutral-200 */
+  }
 
-/* Overlay accesible sin hover (táctiles): el focus del overlay hace visible el contenido */
-.card-testimonio-fge__overlay:focus {
-  opacity: 1;
-  outline: none;
-}
+  /* --- 7.4 Utilidades promovidas de los mockups (definidas SOLO en los
+     <style> locales de los HTML; en las páginas PHP se consumían sin
+     definición → no-op). Mapeadas al sistema:
+     - .fs-xxs                        → escala tipográfica (deuda: 3xs)
+     - .fw-black                      → peso máximo de Lato/Envolventa
+     - .tracking-*                    → tracking de marca (eyebrow/wordmark)
+     - .opacity-100/90-hover          → estados hover de utilidades base */
+  .fs-xxs {
+    font-size: 0.65rem; /* deuda: promover a --fge-font-size-3xs */
+  }
 
-.card-testimonio-fge__nombre {
-  font-family: var(--fge-font-family-headings);
-  font-size: var(--fge-font-size-sm);
-  font-weight: var(--fge-font-weight-bold);
-  color: var(--fge-color-text-inverse);
-  margin: 0;
-}
+  .fw-black {
+    font-weight: 900;
+  }
 
-.card-testimonio-fge__cita {
-  font-size: var(--fge-font-size-xs, 0.65rem);
-  line-height: var(--fge-line-height-base);
-  font-style: italic;
-  color: var(--fge-color-text-inverse);
-  opacity: 0.8;
-  margin: 0;
-}
+  .tracking-tight {
+    letter-spacing: -0.025em;
+  }
 
-/* ==========================================================================
-   6.3 Molécula: Directivo (gobernanza)
-   Ubicación: page-transparencia (futuro CPT equipo).
-   Specs Figma 478:4016+ (MCP): tarjeta border #e0e0e0 radius 8; foto
-   368×500 radius 8; cargo/nombre Lato 16 (#616161 / #212121); fila de
-   3 iconos 39px con gap 16.
-   ========================================================================== */
+  .tracking-wider {
+    letter-spacing: 0.05em;
+  }
 
-.card-directivo-fge {
-  border: 1px solid var(--fge-color-border-subtle);
-  border-radius: var(--fge-radius-md);
-  background-color: var(--fge-color-bg-surface);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: var(--fge-space-sm);
-}
-
-.card-directivo-fge__foto {
-  width: 100%;
-  height: 0;
-  padding-bottom: 128%; /* proporción foto del wireframe: 468/500 ≈ 368×500 */
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--fge-radius-md);
-  background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
-}
-
-.card-directivo-fge__img {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-directivo-fge__placeholder {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--fge-color-text-muted);
-}
-
-.card-directivo-fge__textos {
-  padding: var(--fge-space-sm);
-  display: flex;
-  flex-direction: column;
-  gap: var(--fge-space-xs);
-}
-
-.card-directivo-fge__cargo {
-  color: var(--fge-color-text-muted); /* deuda #616161 */
-  font-size: var(--fge-font-size-base);
-  margin: 0;
-}
-
-.card-directivo-fge__nombre {
-  color: var(--fge-color-neutral-900); /* deuda #212121 */
-  font-size: var(--fge-font-size-base);
-  margin: 0;
-}
-
-.card-directivo-fge__iconos {
-  display: flex;
-  gap: var(--fge-space-md); /* 16px (Figma) */
-  margin-top: var(--fge-space-sm);
-}
-
-.card-directivo-fge__iconos a {
-  display: inline-flex;
-  transition: transform var(--fge-transition-base);
-}
-
-.card-directivo-fge__iconos a:hover {
-  transform: scale(1.1);
-}
-
-/* ==========================================================================
-   6.4 Molécula: Tabs de documentos (Transparencia)
-   Diseño de transparencia.html; tokenizado sobre tokens existentes.
-   Tab inactivo: fondo neutral-100, borde sutil, texto muted.
-   Tab activo: superficie blanca (continúa con el panel), texto principal.
-   ========================================================================== */
-
-.nav-tabs-doc-fge {
-  gap: var(--fge-space-2xs);
-}
-
-.nav-tabs-doc-fge .nav-link {
-  color: var(--fge-color-text-muted);
-  background-color: var(--fge-color-neutral-100);
-  border: 1px solid var(--fge-color-border-subtle);
-  border-radius: var(--fge-radius-sm) var(--fge-radius-sm) 0 0;
-  font-weight: var(--fge-font-weight-semibold, 600);
-  font-size: var(--fge-font-size-sm);
-}
-
-.nav-tabs-doc-fge .nav-link.active,
-.nav-tabs-doc-fge .nav-link:hover {
-  color: var(--fge-color-text-main);
-  background-color: var(--fge-color-bg-surface);
-  border-bottom-color: transparent;
-}
-
-.tab-content-doc-fge {
-  border: 1px solid var(--fge-color-border-subtle);
-  border-radius: 0 0 var(--fge-radius-md) var(--fge-radius-md);
-  background-color: var(--fge-color-bg-surface);
-  min-height: 140px; /* registro del mockup: evita paneles enanos */
-}
-
-/* ==========================================================================
-   6.5 Organismo: Mapa ubicación + moléculas de "Qué hacemos"
-   (page-que-hacemos; Figma 478:2771 + mockup que-hacemos.html)
-   Normalización de color: el mockup usaba success/info/danger y fondos
-   light-gray fuera de paleta → familia morada + grises del sistema.
-   ========================================================================== */
-
-/* --- mapa-ubicacion ------------------------------------------------------ */
-.mapa-ubicacion-fge__visual {
-  background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
-  border-color: #e0e0e0;     /* deuda: --fge-color-neutral-300 */
-  position: relative;
-}
-
-/* --- card-dimension ------------------------------------------------------ */
-.card-dimension-fge__icono {
-  width: 40px;
-  height: 40px;
-  background-color: var(--fge-color-bg-surface);
-  color: var(--fge-color-brand-primary);
-}
-
-.card-dimension-fge__titulo {
-  color: var(--fge-color-brand-primary);
-}
-
-.card-dimension-fge__texto {
-  color: var(--fge-color-text-muted);
-}
-
-/* --- programa-fila -------------------------------------------------------- */
-.programa-fila-fge__chip {
-  border-color: #e0e0e0; /* deuda: --fge-color-neutral-300 */
-}
-
-.programa-fila-fge__imagen {
-  background-color: #f0f0f0;   /* deuda: --fge-color-neutral-200 */
-  border-color: #e0e0e0;       /* deuda: --fge-color-neutral-300 */
-  color: var(--fge-color-text-muted);
-  position: relative;
-}
-
-/* --- card-caso-org -------------------------------------------------------- */
-.card-caso-org-fge__visual {
-  background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
-}
-
-.card-caso-org-fge__visual + h3 {
-  color: var(--fge-color-brand-primary);
-}
-
-/* Badges de país y chips suaves compartidos (también case los molde de
-   programas: un solo diseño en varios contextos — lo que cambia es la data) */
-.badge-fge--pais {
-  background-color: var(--fge-color-brand-primary);
-  color: var(--fge-color-white);
-}
-
-.badge-fge--soft {
-  background-color: #ececee; /* deuda: --fge-color-neutral-200 */
-  color: var(--fge-color-brand-primary);
+  .opacity-100-hover:hover,
+  .opacity-100-hover:focus,
+  .opacity-90-hover:hover,
+  .opacity-90-hover:focus {
+    opacity: 1;
+  }
 }

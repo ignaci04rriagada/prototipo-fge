@@ -18,14 +18,18 @@ $pais_activo = $paises[$caso['pais']] ?? null;
 <!-- molecule/card-caso-org -->
 <article class="card h-100 border-light-subtle rounded-3 p-3 bg-white d-flex flex-column justify-content-between">
   <div>
-    <div class="card-caso-org-fge__visual position-relative rounded ratio ratio-4x3 mb-3 border d-flex align-items-center justify-content-center">
+    <div class="position-relative mb-3">
+      <div class="card-caso-org-fge__visual rounded ratio ratio-4x3 border d-flex align-items-center justify-content-center">
+        <?php if (!empty($caso['imagen'])) : ?>
+          <img src="<?= $fge_base ?>/<?= htmlspecialchars($caso['imagen']) ?>" class="w-100 h-100 object-fit-cover" alt="">
+        <?php else: ?>
+          <i class="bi bi-image text-secondary opacity-50 d-flex align-items-center justify-content-center" style="font-size: 32px;" aria-hidden="true"></i>
+        <?php endif; ?>
+      </div>
       <?php if ($pais_activo) : ?>
+        <!-- badge FUERA del ratio: Bootstrap .ratio > * fuerza width/height 100%
+             a todo hijo directo — el badge se estiraría a todo el visual -->
         <span class="badge badge-fge--pais text-uppercase position-absolute top-0 start-0 m-2 fs-xxs"><?= htmlspecialchars($pais_activo['nombre']) ?></span>
-      <?php endif; ?>
-      <?php if (!empty($caso['imagen'])) : ?>
-        <img src="<?= $fge_base ?>/<?= htmlspecialchars($caso['imagen']) ?>" class="w-100 h-100 object-fit-cover" alt="">
-      <?php else: ?>
-        <i class="bi bi-image text-secondary opacity-50" style="font-size: 32px;" aria-hidden="true"></i>
       <?php endif; ?>
     </div>
     <h3 class="fs-xs fw-bold text-brand-primary mb-2"><?= htmlspecialchars($caso['nombre']) ?></h3>

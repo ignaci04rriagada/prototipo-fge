@@ -13,15 +13,17 @@ $fge_base = fge_base();
 ?>
 <!-- molecule/card-organizacion -->
 <article class="card h-100 <?= $org['en_riesgo'] ? 'border-danger' : 'border-light-subtle' ?> rounded-1 overflow-hidden">
-  <div class="bg-brand-gray ratio ratio-16x9 position-relative d-flex align-items-center justify-content-center">
-    <span class="position-absolute top-0 start-0 m-2 fs-xxs text-secondary fw-medium">Programa</span>
-    <?php if (!empty($org['imagen'])) : ?>
-      <img src="<?= $fge_base ?>/<?= htmlspecialchars($org['imagen']) ?>" class="img-fluid" alt="">
-    <?php else: ?>
-      <svg width="32" height="32" class="text-secondary opacity-50 position-absolute top-50 start-50 translate-middle" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"></path>
-      </svg>
-    <?php endif; ?>
+  <div class="position-relative">
+    <div class="bg-neutral-200 ratio ratio-16x9 d-flex align-items-center justify-content-center">
+      <?php if (!empty($org['imagen'])) : ?>
+        <img src="<?= $fge_base ?>/<?= htmlspecialchars($org['imagen']) ?>" class="img-fluid" alt="">
+      <?php else: ?>
+        <i class="bi bi-image text-secondary opacity-50 d-flex align-items-center justify-content-center" style="font-size: 32px;" aria-hidden="true"></i>
+      <?php endif; ?>
+    </div>
+    <!-- badge FUERA del ratio: Bootstrap .ratio > * fuerza width/height 100%
+         a todo hijo directo — el badge se estiraría a todo el visual -->
+    <span class="badge rounded-1 position-absolute top-0 start-0 m-2 fs-xxs text-secondary fw-medium">Programa</span>
   </div>
   <div class="card-body d-flex flex-column justify-content-between p-3">
     <div>

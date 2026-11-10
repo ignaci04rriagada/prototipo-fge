@@ -8,9 +8,9 @@ $pais = $pais ?? null;
 $fge_base = fge_base();
 ?>
 <!-- molecule/card-pais -->
-<article class="bg-brand-gray rounded-3 p-3 flex-fill d-flex flex-column justify-content-between min-vh-20">
+<article class="bg-neutral-200 rounded-3 p-3 flex-fill d-flex flex-column justify-content-between min-vh-20">
   <h3 class="m-0 align-self-start">
-    <a href="<?= fge_url_pais($pais['slug']) ?>" class="badge bg-brand-navy fw-semibold fs-xxs text-decoration-none" aria-label="Abrir página de <?= htmlspecialchars($pais['nombre']) ?>">
+    <a href="<?= fge_url_pais($pais['slug']) ?>" class="badge bg-purple-950 fw-semibold fs-xxs text-decoration-none" aria-label="Abrir página de <?= htmlspecialchars($pais['nombre']) ?>">
       <?= htmlspecialchars($pais['nombre']) ?>
     </a>
   </h3>

@@ -10,7 +10,7 @@ $fge_base = fge_base();
 <!-- molecule/logo-alianza -->
 <div class="col" tabindex="0">
   <a href="<?= htmlspecialchars($alianza['url_oficial']) ?>" class="text-decoration-none">
-    <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1" title="<?= htmlspecialchars($alianza['nombre']) ?>">
+    <div class="bg-neutral-200 rounded d-flex align-items-center justify-content-center text-secondary ratio ratio-1x1" title="<?= htmlspecialchars($alianza['nombre']) ?>">
       <?php if (!empty($alianza['logo'])) : ?>
         <img src="<?= $fge_base ?>/<?= htmlspecialchars($alianza['logo']) ?>" class="img-fluid p-3" alt="<?= htmlspecialchars($alianza['nombre']) ?>">
       <?php else: ?>

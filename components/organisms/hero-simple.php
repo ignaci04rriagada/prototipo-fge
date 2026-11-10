@@ -4,7 +4,10 @@
  * Contrato: $hero keys: titulo, texto, imagen (ruta relativa de assets, '' →
  * placeholder), cta (OPCIONAL: ['texto' => ..., 'href' => ...] — Figma
  * 478:2773 Página-Qué hacemos pide CTA fucsia "Explorar nuestros programas";
- * páginas que no lo llevan simplemente no definen la key).
+ * páginas que no lo llevan simplemente no definen la key),
+ * etiqueta (OPCIONAL: badge uppercase sobre el H1, p. ej. "ALIANZAS"),
+ * subtitulo (OPCIONAL: kicker semibold entre H1 y párrafo, p. ej.
+ * "¿A qué los invitamos?" — Figma 478:3634 ali corporativas).
  * 📐 Figma 478:3989 (MCP): H1 Outfit Bold 47.78/56 purple-800 (= token
  *    --fge-font-size-5xl) · párrafo Lato 16/24 #616161 · imagen 606×354
  *    en columna derecha · gap 24 · alineación vertical centrada.
@@ -18,9 +21,17 @@ $hero = $hero ?? [];
 <section class="container py-5">
   <div class="row align-items-center g-4">
     <div class="col-12 col-md-6">
+      <?php if (!empty($hero['etiqueta'])) : ?>
+        <span class="badge-fge badge-fge--soft text-uppercase fw-bold fs-xxs px-3 py-1 rounded-pill mb-3 d-inline-block">
+          <?= htmlspecialchars($hero['etiqueta']) ?>
+        </span>
+      <?php endif; ?>
       <h1 class="fw-bold text-brand-purple-800 mb-3" style="max-width: 540px;">
         <?= htmlspecialchars($hero['titulo']) ?>
       </h1>
+      <?php if (!empty($hero['subtitulo'])) : ?>
+        <h2 class="fs-xs fw-bold text-brand-primary mb-2"><?= htmlspecialchars($hero['subtitulo']) ?></h2>
+      <?php endif; ?>
       <p class="fs-xs lh-base m-0" style="max-width: 540px; color: var(--fge-color-text-muted);">
         <?= htmlspecialchars($hero['texto']) ?>
       </p>
@@ -38,8 +49,8 @@ $hero = $hero ?? [];
           <img src="<?= fge_base() ?>/<?= htmlspecialchars($hero['imagen']) ?>" class="w-100 h-100 object-fit-cover" alt="">
         </div>
       <?php else: ?>
-        <div class="bg-brand-gray rounded d-flex align-items-center justify-content-center ratio ratio-16x9">
-          <i class="bi bi-image text-secondary opacity-50" style="font-size: 48px;" aria-hidden="true"></i>
+        <div class="bg-neutral-200 rounded d-flex align-items-center justify-content-center ratio ratio-16x9">
+          <i class="bi bi-image text-secondary opacity-50 d-flex align-items-center justify-content-center" style="font-size: 48px;" aria-hidden="true"></i>
         </div>
       <?php endif; ?>
     </div>

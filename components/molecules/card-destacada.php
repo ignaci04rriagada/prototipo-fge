@@ -7,9 +7,9 @@
 $noticia = $noticia ?? null;
 ?>
 <!-- molecule/card-destacada -->
-<article class="bg-brand-gray rounded-3 p-4 p-md-5 position-relative d-flex flex-column justify-content-between flex-grow-1 min-vh-40">
+<article class="bg-neutral-200 rounded-3 p-4 p-md-5 position-relative d-flex flex-column justify-content-between flex-grow-1 min-vh-40">
   <div class="position-absolute top-0 end-0 p-4 d-flex gap-2" role="group" aria-label="Controles del carrusel">
-    <span class="bg-brand-navy rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+    <span class="bg-purple-950 rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
     <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
     <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
     <span class="border border-secondary rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
@@ -25,9 +25,9 @@ $noticia = $noticia ?? null;
         </svg>
       <?php endif; ?>
     </div>
-    <h2 class="h2 fw-extrabold text-brand-navy tracking-tight mb-4">
+    <h2 class="h2 fw-extrabold text-brand-primary tracking-tight mb-4">
       <?= htmlspecialchars($noticia['titulo']) ?>
     </h2>
-    <a href="<?= htmlspecialchars($noticia['url']) ?>" class="btn btn-brand-fuchsia btn-sm fw-semibold rounded px-3">Ver más</a>
+    <a href="<?= htmlspecialchars($noticia['url']) ?>" class="btn-fge btn-fge--primary btn-sm fw-semibold rounded px-3">Ver más</a>
   </div>
 </article>

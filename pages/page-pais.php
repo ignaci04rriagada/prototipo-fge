@@ -80,12 +80,6 @@ include '../includes/header.php';
     </div>
   </section>
 
-  <?php /* ── BANNER TRANSPARENCIA 2 (cyan) ───────────────────────────── */ ?>
-  <?php fge_componente('molecules/banner-cta', ['cta' => [
-      'titulo' => 'Transparencia activa', 'texto' => 'Ir a Transparencia',
-      'href' => fge_base() . '/pages/page-transparencia.php', 'fondo' => 'cyan',
-  ]]); ?>
-
   <?php /* ── TESTIMONIOS (consulta por país) ─────────────────────────── */ ?>
   <section class="container py-4">
     <h2 class="h5 fw-bold text-dark mb-1">Testimonios</h2>
@@ -111,12 +105,6 @@ include '../includes/header.php';
       endforeach; ?>
     </div>
   </section>
-
-  <?php /* ── BANNER TRANSPARENCIA 3 (green) ──────────────────────────── */ ?>
-  <?php fge_componente('molecules/banner-cta', ['cta' => [
-      'titulo' => 'Transparencia activa', 'texto' => 'Ir a Transparencia',
-      'href' => fge_base() . '/pages/page-transparencia.php', 'fondo' => 'green-banner',
-  ]]); ?>
 
   <?php /* ── CONTACTO LOCAL (contenido del término país) ─────────────── */ ?>
   <?php fge_componente('molecules/contacto-local', ['pais' => $pais]); ?>

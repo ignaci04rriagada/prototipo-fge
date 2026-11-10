@@ -12,7 +12,7 @@ $fondo   = $metrica['fondo'] ?? null;
 $clase_base  = $fondo ? "bg-brand-$fondo" : 'border';
 $extra_fondo = $fondo ? 'text-white d-flex flex-column justify-content-center h-100 min-vh-15' : '';
 $color_titulo = $fondo ? 'text-white-50' : (($metrica['destacado'] ?? false) ? 'text-brand-fuchsia' : 'text-muted');
-$color_valor  = $fondo ? '' : (($metrica['destacado'] ?? false) ? 'text-brand-fuchsia' : 'text-brand-navy');
+$color_valor  = $fondo ? '' : (($metrica['destacado'] ?? false) ? 'text-brand-fuchsia' : 'text-brand-primary');
 $clase_valor  = $fondo ? 'h3 tracking-tight' : 'display-6';
 ?>
 <!-- molecule/metrica-counter -->

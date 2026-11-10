@@ -54,7 +54,7 @@ $fge_base = fge_base();
         </div>
       <?php else: ?>
         <div class="programa-fila-fge__imagen rounded d-flex align-items-center justify-content-center ratio ratio-16x9 border">
-          <i class="bi bi-image text-secondary opacity-50" style="font-size: 32px;" aria-hidden="true"></i>
+          <i class="bi bi-image text-secondary opacity-50 d-flex align-items-center justify-content-center" style="font-size: 32px;" aria-hidden="true"></i>
         </div>
       <?php endif; ?>
     </div>

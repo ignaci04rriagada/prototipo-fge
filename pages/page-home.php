@@ -53,7 +53,7 @@ include '../includes/header.php';
 
   <?php /* ── IMPACTO REGIONAL (futuro: transient métricas Google Sheets) ─ */ ?>
   <section class="container py-4">
-    <h2 class="h5 fw-bold text-brand-navy mb-1">Impacto regional</h2>
+    <h2 class="h5 fw-bold text-brand-primary mb-1">Impacto regional</h2>
     <p class="fs-xs text-muted mb-4">Última actualización: <?= htmlspecialchars($metricas['actualizado']) ?></p>
 
     <div class="row row-cols-2 row-cols-md-4 g-3">
@@ -68,7 +68,7 @@ include '../includes/header.php';
 
   <?php /* ── ALIANZAS (futuro CPT alianzas) ──────────────────────────── */ ?>
   <section class="container py-4">
-    <h2 class="h5 fw-bold text-brand-navy mb-4">Alianzas</h2>
+    <h2 class="h5 fw-bold text-brand-primary mb-4">Alianzas</h2>
     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-6 g-3">
       <?php foreach ($alianzas as $alianza_data):
         fge_componente('molecules/logo-alianza', ['alianza' => $alianza_data, 'fge_base' => fge_base()]);
@@ -78,7 +78,7 @@ include '../includes/header.php';
 
   <?php /* ── CÓMO COLABORAR (SCF del Page en el tema) ─────────────────── */ ?>
   <section class="container py-4">
-    <h2 class="h5 fw-bold text-brand-navy mb-1">Cómo colaborar</h2>
+    <h2 class="h5 fw-bold text-brand-primary mb-1">Cómo colaborar</h2>
     <p class="fs-xs text-muted mb-4">Opciones reales de donación, voluntariado y alianzas para [país].</p>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -88,7 +88,7 @@ include '../includes/header.php';
 
   <?php /* ── TESTIMONIOS (futuro CPT testimonios) ────────────────────── */ ?>
   <section class="container py-4 pb-5">
-    <h2 class="h5 fw-bold text-brand-navy mb-1">Testimonios</h2>
+    <h2 class="h5 fw-bold text-brand-primary mb-1">Testimonios</h2>
     <p class="fs-xs text-muted mb-4">Programas, proyectos y enfoques adaptados al contexto local, manteniendo la misma estructura de contenido para Chile, Argentina y Uruguay.</p>
 
     <div class="row g-4">
