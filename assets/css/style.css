@@ -1,6 +1,22 @@
 /* ==========================================================================
    FUNDACIÓN GESTIONAR ESPERANZAS - SISTEMA DE ESTILOS (BEM)
    ==========================================================================
+   🔑 CONTRATO DE USO (para todo maquetado nuevo, humano o IA):
+   1. Este archivo ya está delineado por la guía de estilo: las sections
+      1-3 y 7 NO se tocan salvo aprobación explícita del cliente.
+   2. Los componentes nuevos PUEDEN hacer crecer las sections 4-6, pero
+      SOLO consumiendo los tokens semánticos y de espaciado de :root
+      (--fge-color-*, --fge-space-*, --fge-radius-*, --fge-font-size-*).
+      Prohibido: hex sueltos, px sueltos, font-sizes arbitrarios.
+   3. Si un valor no existe como token: NO inventar. Se propone el token
+      al cliente ("necesito neutral-200") y, mientras se define, el valor
+      va como literal con comentario // deuda: crear --fge-color-neutral-200.
+   4. Un componente = un bloque BEM con comentario de contrato (dónde vive,
+      qué token consumió y qué concepto en el mockup()).  El mismo diseño
+      en varios contextos; lo que cambia la consulta, no el CSS.
+   5. Sombra/efectos del mockup: clases de utilidad de marca bien del sistema
+      (§4) van con nombre fge-*  frente  names de la mockup (bridge.css).
+      
    TABLA DE CONTENIDOS:
    
    1. SETTINGS & VARIABLES
@@ -300,6 +316,17 @@ a:hover {
   color: var(--fge-color-white);
 }
 
+/* Utilidades de marca: colores de headings según Figma (MCP) —
+   H1 páginas internas (#383165) y títulos de sección / enlaces de
+   documentos (#4c4688) */
+.text-brand-primary {
+  color: var(--fge-color-brand-primary) !important;
+}
+
+.text-brand-purple-800 {
+  color: var(--fge-color-purple-800) !important;
+}
+
 /* --- 4.2 BADGES (.badge-fge) --- */
 .badge-fge {
   display: inline-block;
@@ -547,4 +574,268 @@ a:hover {
     padding-right: var(--fge-grid-margin-desktop); /* 80px */
     padding-left: var(--fge-grid-margin-desktop); /* 80px */
   }
+}
+
+/* ==========================================================================
+   6.2 Molécula: Testimonio (hover overlay)
+   Ubicación: home (destacados internacionales) y page-pais (por taxonomía).
+   Mismo diseño en ambos contextos; cambia solo la consulta.
+   ========================================================================== */
+
+.card-testimonio-fge {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--fge-radius-md);
+  aspect-ratio: 1 / 1; /* cuadrado, según Figma */
+  background-color: var(--fge-color-bg-surface);
+  display: block;
+}
+
+/* Estado sin foto (is-placeholder): fondo de imagen-provisional más
+   perceptible que la superficie de la tarjeta (match con mockup:
+   tarjeta gris + ícono) */
+.card-testimonio-fge.is-placeholder {
+  background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
+}
+
+.card-testimonio-fge__foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder cuando no hay foto (src vacío) */
+.card-testimonio-fge__placeholder {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fge-color-text-muted);
+}
+
+/* Overlay del testimonio (estado hover): tarjeta purple-900 con texto
+   blanco, según Figma. Oculto por defecto, visible en hover/focus.
+   🔑 DECISIÓN DEL CLIENTE (no tocar sin OK): el Figma landing muestra el
+   hover como tarjeta BLANCA con cita en recuadro con borde (#4c4688), pero
+   la sección país lo muestra morado. Es una inconsistencia del archivo
+   Figma; el cliente eligió UNIFICAR en morado con letras blancas en
+   ambos contextos (diseño único). Verificado con Figma MCP (vertex
+   478:4737 landing vs sección país). */
+.card-testimonio-fge__overlay {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: var(--fge-color-purple-900);
+  color: var(--fge-color-text-inverse);
+  padding: var(--fge-space-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--fge-space-xs);
+  opacity: 0;
+  transition: opacity var(--fge-transition-base);
+}
+
+.card-testimonio-fge:hover .card-testimonio-fge__overlay,
+.card-testimonio-fge:focus-within .card-testimonio-fge__overlay {
+  opacity: 1;
+}
+
+/* Overlay accesible sin hover (táctiles): el focus del overlay hace visible el contenido */
+.card-testimonio-fge__overlay:focus {
+  opacity: 1;
+  outline: none;
+}
+
+.card-testimonio-fge__nombre {
+  font-family: var(--fge-font-family-headings);
+  font-size: var(--fge-font-size-sm);
+  font-weight: var(--fge-font-weight-bold);
+  color: var(--fge-color-text-inverse);
+  margin: 0;
+}
+
+.card-testimonio-fge__cita {
+  font-size: var(--fge-font-size-xs, 0.65rem);
+  line-height: var(--fge-line-height-base);
+  font-style: italic;
+  color: var(--fge-color-text-inverse);
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ==========================================================================
+   6.3 Molécula: Directivo (gobernanza)
+   Ubicación: page-transparencia (futuro CPT equipo).
+   Specs Figma 478:4016+ (MCP): tarjeta border #e0e0e0 radius 8; foto
+   368×500 radius 8; cargo/nombre Lato 16 (#616161 / #212121); fila de
+   3 iconos 39px con gap 16.
+   ========================================================================== */
+
+.card-directivo-fge {
+  border: 1px solid var(--fge-color-border-subtle);
+  border-radius: var(--fge-radius-md);
+  background-color: var(--fge-color-bg-surface);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--fge-space-sm);
+}
+
+.card-directivo-fge__foto {
+  width: 100%;
+  height: 0;
+  padding-bottom: 128%; /* proporción foto del wireframe: 468/500 ≈ 368×500 */
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--fge-radius-md);
+  background-color: #ececee; /* deuda: --fge-color-neutral-200 (bridge) */
+}
+
+.card-directivo-fge__img {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-directivo-fge__placeholder {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fge-color-text-muted);
+}
+
+.card-directivo-fge__textos {
+  padding: var(--fge-space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fge-space-xs);
+}
+
+.card-directivo-fge__cargo {
+  color: var(--fge-color-text-muted); /* deuda #616161 */
+  font-size: var(--fge-font-size-base);
+  margin: 0;
+}
+
+.card-directivo-fge__nombre {
+  color: var(--fge-color-neutral-900); /* deuda #212121 */
+  font-size: var(--fge-font-size-base);
+  margin: 0;
+}
+
+.card-directivo-fge__iconos {
+  display: flex;
+  gap: var(--fge-space-md); /* 16px (Figma) */
+  margin-top: var(--fge-space-sm);
+}
+
+.card-directivo-fge__iconos a {
+  display: inline-flex;
+  transition: transform var(--fge-transition-base);
+}
+
+.card-directivo-fge__iconos a:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   6.4 Molécula: Tabs de documentos (Transparencia)
+   Diseño de transparencia.html; tokenizado sobre tokens existentes.
+   Tab inactivo: fondo neutral-100, borde sutil, texto muted.
+   Tab activo: superficie blanca (continúa con el panel), texto principal.
+   ========================================================================== */
+
+.nav-tabs-doc-fge {
+  gap: var(--fge-space-2xs);
+}
+
+.nav-tabs-doc-fge .nav-link {
+  color: var(--fge-color-text-muted);
+  background-color: var(--fge-color-neutral-100);
+  border: 1px solid var(--fge-color-border-subtle);
+  border-radius: var(--fge-radius-sm) var(--fge-radius-sm) 0 0;
+  font-weight: var(--fge-font-weight-semibold, 600);
+  font-size: var(--fge-font-size-sm);
+}
+
+.nav-tabs-doc-fge .nav-link.active,
+.nav-tabs-doc-fge .nav-link:hover {
+  color: var(--fge-color-text-main);
+  background-color: var(--fge-color-bg-surface);
+  border-bottom-color: transparent;
+}
+
+.tab-content-doc-fge {
+  border: 1px solid var(--fge-color-border-subtle);
+  border-radius: 0 0 var(--fge-radius-md) var(--fge-radius-md);
+  background-color: var(--fge-color-bg-surface);
+  min-height: 140px; /* registro del mockup: evita paneles enanos */
+}
+
+/* ==========================================================================
+   6.5 Organismo: Mapa ubicación + moléculas de "Qué hacemos"
+   (page-que-hacemos; Figma 478:2771 + mockup que-hacemos.html)
+   Normalización de color: el mockup usaba success/info/danger y fondos
+   light-gray fuera de paleta → familia morada + grises del sistema.
+   ========================================================================== */
+
+/* --- mapa-ubicacion ------------------------------------------------------ */
+.mapa-ubicacion-fge__visual {
+  background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
+  border-color: #e0e0e0;     /* deuda: --fge-color-neutral-300 */
+  position: relative;
+}
+
+/* --- card-dimension ------------------------------------------------------ */
+.card-dimension-fge__icono {
+  width: 40px;
+  height: 40px;
+  background-color: var(--fge-color-bg-surface);
+  color: var(--fge-color-brand-primary);
+}
+
+.card-dimension-fge__titulo {
+  color: var(--fge-color-brand-primary);
+}
+
+.card-dimension-fge__texto {
+  color: var(--fge-color-text-muted);
+}
+
+/* --- programa-fila -------------------------------------------------------- */
+.programa-fila-fge__chip {
+  border-color: #e0e0e0; /* deuda: --fge-color-neutral-300 */
+}
+
+.programa-fila-fge__imagen {
+  background-color: #f0f0f0;   /* deuda: --fge-color-neutral-200 */
+  border-color: #e0e0e0;       /* deuda: --fge-color-neutral-300 */
+  color: var(--fge-color-text-muted);
+  position: relative;
+}
+
+/* --- card-caso-org -------------------------------------------------------- */
+.card-caso-org-fge__visual {
+  background-color: #f0f0f0; /* deuda: --fge-color-neutral-200 */
+}
+
+.card-caso-org-fge__visual + h3 {
+  color: var(--fge-color-brand-primary);
+}
+
+/* Badges de país y chips suaves compartidos (también case los molde de
+   programas: un solo diseño en varios contextos — lo que cambia es la data) */
+.badge-fge--pais {
+  background-color: var(--fge-color-brand-primary);
+  color: var(--fge-color-white);
+}
+
+.badge-fge--soft {
+  background-color: #ececee; /* deuda: --fge-color-neutral-200 */
+  color: var(--fge-color-brand-primary);
 }

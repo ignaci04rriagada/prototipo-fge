@@ -1,73 +1,71 @@
-# Fundación Gestionar Esperanzas — Sistema de Diseño y Maquetación Modular
+# Prototipo FGE — Fundación Gestionar Esperanzas
 
-Este repositorio contiene el sistema de estilos base, componentes UI y prototipo modular desarrollado para el sitio web de la **Fundación Gestionar Esperanzas**. Se trata de una arquitectura basada en **Atomic Design** y metodología **BEM**, preparada de forma independiente antes de su integración definitiva en WordPress.
+Prototipo en PHP puro (sin CMS) del sitio institucional. Valida el diseño, los design tokens y la arquitectura de componentes antes de migrar todo a un tema clásico de WordPress. No es una maqueta estática: las páginas se sirven con MAMP en `http://localhost/prototipo-fge`.
 
-## 🎯 Propósito del Proyecto
+## Estructura
 
-El objetivo principal de esta etapa es construir la infraestructura visual y los prototipos de componentes de interfaz utilizando un entorno local optimizado. Esto permite validar el diseño, la responsividad y la escalabilidad de la maqueta sin depender aún de la estructura interna de un CMS.
+```
+prototipo-fge/
+├── assets/
+│   ├── css/style.css      Design tokens (:root) + estilos de componentes propios
+│   ├── css/bridge.css     Puente temporal: utilidades de los mockups → tokens
+│   ├── img/               Imágenes e íconos descargados del Figma
+│   └── fonts/             Tipografías del manual de marca (Outfit, Lato)
+├── bootstrap.php          Helpers del sistema (fge_*). Único punto de carga
+├── index.php              Redirige a la página principal
+├── includes/              Shells globales: head, header, footer
+├── components/
+│   ├── organisms/         Bloques completos (navbar, footer, heroes)
+│   ├── molecules/         Componentes (tarjetas, banners, métricas)
+│   └── atoms/             Piezas mínimas
+├── data/                  Simulación de base de datos (futuro CPT / campos SCF)
+├── pages/                 Una plantilla por página del sitio
+├── docs/                  Estrategia de migración, auditorías y mapa de progreso
+└── *.html                 Mockups HTML originales (solo referencia, ya en desuso)
+```
 
-### ⚠️ Etapa Previa a WordPress
+## Cómo se construye una página
 
-Este desarrollo constituye una **fase estática y desacoplada (Pre-WordPress Theme Development)**. Una vez validados los átomos, moléculas y organismos BEM en este prototipo, todo el código HTML/PHP y CSS será migrado para constituir un **Tema Personalizado de WordPress** respaldado por Custom Post Types (CPT) y Advanced Custom Fields (ACF).
+Cada archivo de `pages/` sigue el mismo orden:
 
----
+1. **Datos antes de markup.** Las consultas (`fge_consulta()`) viven al inicio del archivo, como hoy se hace con un `WP_Query` en WordPress.
+2. **Shells.** `includes/head.php` y `includes/header.php` abren; `includes/footer.php` cierra. Ninguna página maqueta nav ni footer propio.
+3. **Componentes.** El contenido se ensambla con `fge_componente('molecules/nombre', $vars)`, que incluye `components/molecules/nombre.php`.
 
-## 💻 Entorno de Desarrollo y Modularización con MAMP
+Un componente declara en su cabecera su contrato: qué variables recibe, de qué colección de `data/` viene y qué será en el tema WordPress (template part, campo SCF o taxonomía).
 
-Para simular una estructura modular similar a la de un tema de WordPress sin añadir la sobrecarga del CMS en fases tempranas, se utiliza un servidor local basado en **MAMP**:
+## Reglas del sistema
 
-- **Servidor Local PHP/Apache:** Permite interpretar archivos `.php` de forma nativa en el entorno local (`http://localhost/prototipo-fge`).
-- **Modularización con PHP Includes:** En lugar de maquetar páginas monolíticas, se emplean estructuras modulares mediante `include` o `require_once` de PHP para separar componentes reutilizables (ej: `header.php`, `footer.php`, llamadas a componentes de tarjetas, etc.).
-- **Iteración Ágil:** Facilita probar y ajustar la jerarquía visual, los tokens y los componentes BEM de forma aislada antes de traducirlos a la jerarquía de plantillas de WordPress (`single.php`, `archive.php`, `page.php`).
+- **Design tokens únicos.** Todo color, espaciado y tipografía viene de las variables de `:root` en `style.css`. Ningún hex suelto en los componentes; si un valor no tiene token, se documenta con comentario de deuda.
+- **Un diseño por componente.** Si el mismo bloque aparece en varias páginas con diseño distinto, se unifica. Lo que cambia entre contextos es la consulta de datos, no el markup.
+- **Diferencia entre diseño y selección de contenido.** Ejemplo real: los testimonios de la página principal (los que el cliente destaca) y los de la página de país (filtrados por territorio) comparten la misma molécula; la sola consulta cambia.
+- **`bridge.css` es deuda temporal.** Mapea utilidades de los mockups a los tokens oficiales y muere cuando las últimas secciones pasen a clases propias.
 
----
+## Helpers principales (bootstrap.php)
 
-## 🛠️ Características Principales del Sistema
+| Helper | Uso |
+|---|---|
+| `fge_datos('entidad')` | Lee `data/entidad.php` (config global, menús, países) |
+| `fge_consulta('coleccion', $filtros)` | Lee `data/posts-coleccion.php` con filtros estilo `WP_Query` |
+| `fge_componente($ruta, $vars)` | Renderiza un componente con sus variables |
+| `fge_base()` | URL absoluta del prototipo (evita rutas relativas rotas) |
+| `fge_url_pais($slug)` | Enlace a la página de país |
 
-### 1. Sistema de Design Tokens (`:root`)
+## Entorno y verificación
 
-La arquitectura centraliza la identidad visual en dos niveles de variables CSS dentro de `assets/css/style.css`:
+- Servir con MAMP (`http://localhost/prototipo-fge`) o con `php -S localhost:8799`.
+- Sintaxis: `php -l <archivo>`. Render: `curl` a la página y revisar el código resultante.
+- El CSS se sirve con versión automática (`style.css?v=<mtime>`); los cambios en estilos invalidan la caché del navegador sin recargas forzadas.
 
-- **Primitivos (Manual de Marca):**
-  - **Color Primario / Marca:** Púrpura `#4c4688` (30% de uso) y sus variantes tonales (`700` a `950`).
-  - **Acentos (Isotipo):** Cian `#1baac1` (20%), Verde `#199d6b` (15%), Lima `#5da430` (10%).
-  - **Acciones / CTA:** Rosa `#ff2471` (15%) para conversión principal y Amarillo `#ffc04c` (10%) para llamados a donación.
-  - **Escala Neutra:** Graduaciones desde `#fafafa` (`100`) hasta `#1a1a1a` (`900`).
+## Documentación en docs/
 
-- **Semánticos / Funcionales:** Mapeo de tokens primitivos a funciones concretas de UI (`--fge-color-brand-primary`, `--fge-color-action-primary`, `--fge-color-bg-surface`).
+- `estrategia-theme-classic-wp.md` — destino WordPress: CPTs, taxonomías, campos y plantillas.
+- `MAPA-MIGRACION.md` — manifiesto vivo: auditoría por página y componente, decisiones registradas con fecha.
+- `informe-auditoria-tokens.md` — auditoría de colores y utilidades fuera de paleta.
+- `propuesta-restructuracion-prototipo.md` — origen de la estructura actual.
 
-### 2. Tipografía y Jerarquía Visual
+## Estado
 
-- **Familia Tipográfica:** _Envolventa_ para encabezados (`h1`-`h6`) y _Lato_ para cuerpo de texto y elementos generales.
-- **Escala Tipográfica:** Definida mediante la proporción **Minor Third (1.2)** sobre una base rem de `16px`.
+Páginas maquetadas y auditadas: principal (`page-home`), país (`page-pais`, molde paramétrico por `?pais=slug`), transparencia (`page-transparencia`) y navegación conectada entre ellas. El resto de páginas del sitio pendiente de replicar el mismo patrón.
 
-### 3. Sistema de Grilla Personalizado (Figma Override)
-
-Integración y sobrescritura sobre el sistema flexbox de Bootstrap 5.3:
-
-- **Márgenes Laterales:** `80px` (`5rem`) en pantallas de escritorio (`>= 992px`) para guardar fidelidad con el diseño de Figma.
-- **Medianil (Gutters):** `24px` (`1.5rem`) estandarizados entre columnas (`.row`).
-
----
-
-## 📁 Estructura del CSS (`assets/css/style.css`)
-
-El archivo de estilos sigue una estructura clara en 7 secciones:
-
-1. **Settings & Variables:** Design Tokens en `:root`.
-2. **Generics & Resets:** Normalización y ajustes globales.
-3. **Base & Elements:** Estilos para etiquetas HTML puras (`body`, `h1`-`h6`, `p`, `a`).
-4. **Atoms (Átomos):** Botones (`.btn-fge`), etiquetas y componentes primarios.
-5. **Molecules (Moléculas):** Tarjetas (`.card-fge`), testimonios y bloques combinados.
-6. **Organisms (Organismos):** Componentes complejos (`.header-fge`, `.hero-fge`, `.footer-fge`).
-7. **Utilities & Overrides:** Sobrescrituras a Bootstrap y clases auxiliares.
-
----
-
-## 🚀 Hoja de Ruta / Próximos Pasos
-
-- [x] Consolidación de Tokens CSS y sobrescritura de Grilla de Figma.
-- [x] Maquetación de prototipo base en MAMP (`index.php`).
-- [ ] Construcción de Átomos (`.btn-fge`, `.badge-fge`) con metodología BEM.
-- [ ] Construcción de Moléculas y Organismos.
-- [ ] **Migración a WordPress:** Conversión de componentes a un Tema Personalizado (PHP + CPT + ACF).
+La migración a WordPress no comienza hasta validar el prototipo completo. Cuando ocurra, cada pieza ya tiene su traducción definida: moléculas a template parts, `data/` a CPTs con ACF/SCF, y `fge_consulta()` a `WP_Query`.

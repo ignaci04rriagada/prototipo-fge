@@ -1,17 +1,8 @@
-<?php include("includes/head.php"); ?>   
-
-    
-<?php include("includes/header.php"); ?>   
-
-<div class="container">
-    <!-- COLUMNA IZQUIERDA -->
-    <div class="col-md-8">
-
-    </div>
-    <!-- COLUMNA DERECHA-->
-    <div class="col-md-4">
-
-    </div>
-</div>
-
-<?php include("includes/footer.php"); ?>
+<?php
+/**
+ * index.php — puerta de entrada del prototipo en MAMP.
+ * Redirige a la landing pre-WP. (En el tema WordPress este archivo
+ * es la fallback de la jerarquía de plantillas.)
+ */
+header('Location: pages/page-home.php');
+exit;

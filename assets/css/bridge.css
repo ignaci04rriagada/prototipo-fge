@@ -1,0 +1,118 @@
+/* ==========================================================================
+   BRIDGE CSS — Puente temporal prototipo → tokens FGE
+   ==========================================================================
+   Rol: las páginas pre-BEM usan utilidades legadas (--brand-*, .bg-brand-*,
+   .fs-*). Este archivo re-apunta cada color NO-OFICIAL al token FGE correcto.
+
+   ⚠️ DEUDA DOCUMENTADA (P2): cuando cada sección esté re-escrita a BEM
+   ( .card-fge__* ), borrar aquí la línea correspondiente. El archivo debe
+   ACABAR VACÍO a fin de migración. Mantener ordenado por página de origen.
+
+   Tokens de referencia: assets/css/style.css (:root)
+   ========================================================================== */
+
+:root {
+  /* Puente landing: navy/dark del mockup → paleta morada oficial */
+  --brand-navy: #22234B;              /* mockup: landing */
+  --brand-dark: #1c1a3b;              /* mockup: landing */
+  --fge-bridge-navy:   var(--fge-color-purple-900);  /* #251c42 */
+  --fge-bridge-dark:   var(--fge-color-purple-950);  /* #1b1230 */
+
+  /* Puente landing: CTA fuchsia → rosa acción oficial */
+  --brand-fuchsia:       var(--fge-color-pink-base);        /* #ff2471 */
+  --brand-fuchsia-hover: var(--fge-color-pink-hover);        /* #ff2471d8 */
+
+  /* Puente landing: teal → cian oficial del isotipo
+     (deuda: definir token --fge-color-cyan-700; mientras, hover fijo) */
+  --brand-teal:       var(--fge-color-cyan-base);            /* #1baac1 */
+  --brand-teal-hover: #157d90;         /* deuda: crear token cyan-700 */
+
+  /* Puente landing: superficies grises → neutrales oficiales
+     (deuda: crear tokens neutral-200/300; mientras, hex mockup) */
+  --brand-gray-bg: #ececee;            /* deuda: --fge-color-neutral-200/300 */
+  --brand-card-bg: #e5e5e7;            /* deuda: --fge-color-neutral-300 */
+
+  /* Re-expresión de utilidades legadas con tokens */
+  --brand-navy-on: var(--fge-bridge-navy);
+}
+
+/* Identidad Visual legada → tokens */
+.bg-brand-navy       { background-color: var(--fge-bridge-navy) !important; }
+.text-brand-navy     { color: var(--fge-bridge-navy) !important; }
+.bg-brand-dark       { background-color: var(--fge-bridge-dark) !important; }
+.text-brand-dark     { color: var(--fge-bridge-dark) !important; }
+
+.bg-brand-gray       { background-color: var(--brand-gray-bg) !important; }
+.bg-brand-card       { background-color: var(--brand-card-bg) !important; }
+
+.text-brand-fuchsia  { color: var(--brand-fuchsia) !important; }
+.bg-brand-fuchsia    { background-color: var(--brand-fuchsia) !important; color: #ffffff !important; }
+
+/* Botones legados → mantenemos markup del mockup, color oficial */
+.btn-brand-fuchsia {
+  background-color: var(--brand-fuchsia);
+  color: #ffffff;
+  border: none;
+}
+.btn-brand-fuchsia:hover, .btn-brand-fuchsia:focus {
+  background-color: var(--brand-fuchsia-hover);
+  color: #ffffff;
+}
+
+.btn-brand-teal {
+  background-color: var(--brand-teal);
+  color: #ffffff;
+  border: none;
+}
+.btn-brand-teal:hover, .btn-brand-teal:focus {
+  background-color: var(--brand-teal-hover);
+  color: #ffffff;
+}
+
+/* Utilidades de tamaño del mockup (deuda: escalar a --fge-font-size-*) */
+.fs-xs  { font-size: 0.75rem; }
+.fs-xxs { font-size: 0.65rem; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+
+/* Complementos que el mockup no utiliza y Bootstrap 5.3 no trae */
+.opacity-100-hover:hover { opacity: 1 !important; }
+
+/* ── Puente page-pais ─────────────────────────────────────────────
+   Origen formas territoire: por-pais.html
+   Mapa: dark-purple/banner/card → purple-950/900/700 · pink → pink-base
+         green-banner → green-base · gold → yellow-base  */
+:root {
+  --fge-bridge-purple-700: var(--fge-color-purple-700);   /* cards */
+  --fge-bridge-purple-900: var(--fge-color-purple-900);   /* banner */
+  --fge-bridge-purple-950: var(--fge-color-purple-950);   /* topbar/dark */
+}
+.bg-brand-dark-purple     { background-color: var(--fge-bridge-purple-950) !important; }
+.bg-brand-purple-banner   { background-color: var(--fge-bridge-purple-900) !important; }
+.bg-brand-purple-card     { background-color: var(--fge-bridge-purple-700) !important; }
+.bg-brand-pink            { background-color: var(--fge-color-pink-base) !important; }
+
+.bg-brand-cyan            { background-color: var(--fge-color-cyan-base) !important; }
+.bg-brand-green           { background-color: var(--fge-color-green-base) !important; }
+.bg-brand-green-banner    { background-color: var(--fge-color-green-base) !important; }
+.bg-brand-gold            { background-color: var(--fge-color-yellow-base) !important; }
+
+.btn-brand-pink {
+  background-color: var(--fge-color-pink-base);
+  color: #ffffff;
+  border: none;
+}
+.btn-brand-pink:hover, .btn-brand-pink:focus {
+  background-color: var(--fge-color-pink-hover);
+  color: #ffffff;
+}
+
+/* Dropdown países del topbar: sobre el navbar sticky (z 1020 de Bootstrap) */
+.fge-topbar-paises .dropdown-menu { z-index: 1080; }
+
+.min-vh-15     { min-height: 15vh; }
+.fw-black      { font-weight: 900 !important; }
+.min-vh-20     { min-height: 20vh; }
+.min-vh-40     { min-height: 40vh; }
+.max-w-lg      { max-width: 32rem; }
+.opacity-100-hover:hover { opacity: 1 !important; }
