@@ -10,7 +10,7 @@ contrato de header/footer/páginas. Así la migración deja de ser "traducir HTM
 2. `header.php` / `footer.php` como shells en la raíz → navs desde `assets/templates/navs/`, footer por widgets.
 3. Páginas = page templates con `Template Name:` (copias del `page.php` de Underscores), nunca `front-page.php`.
 4. Campos: SCF (+ fallback a `get_post_meta()`). JS: `js-functions.php` cableado desde el día uno.
-5. Contenido dinámico según `docs/estrategia-theme-classic-wp.md` (CPTs: programas, organizaciones,
+5. Contenido dinámico según `_proceso/estrategia-theme-classic-wp.md` (CPTs: programas, organizaciones,
    alianzas, testimonios, transparencia, equipo + taxonomías `pais` y `linea_programa` + métricas
    vía Transients + sistema de campañas/alertas).
 
@@ -132,7 +132,7 @@ se convertirá casi literal en la definición de campos del plugin después.
 | 4 | **Data antes de markup** | Al crear un componente con contenido dinámico: primero su shape en `data/entidad.php` (contrato SCF final), luego el markup que lo consume. |
 | 5 | **Página = composición de includes** | Un page template no maqueta: `includes/head.php` + organismos + `includes/footer.php`. Si una vista necesita markup único, se migra a organismo/molécula. |
 | 6 | **Un solo `<head>`** | Los recursos (CDN Bootstrap, Envolventa/Lato, style.css) se declaran UNA VEZ en `includes/head.php`. Las páginas no traen `<link>`. |
-| 7 | **Manifest vivo** | Al cierre, `docs/MAPA-MIGRACION.md` documenta: cada archivo prototipo → archivo tema + transformación (copiar tal cual / hook WP / data→SCF). |
+| 7 | **Manifest vivo** | Al cierre, `_proceso/MAPA-MIGRACION.md` documenta: cada archivo prototipo → archivo tema + transformación (copiar tal cual / hook WP / data→SCF). |
 | 8 | **Simulación anticipada de WP** | Todo include helper (`fge_component()`, `fge_datos()`) se escribe con firma que mañana se traducirá 1:1 a `get_template_part()` / `SCF::get()`. |
 
 **Flexibilidad:** lo único que cambia por proyecto es (a) tokens, (b) entidades de `data/`,

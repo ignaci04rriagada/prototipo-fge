@@ -20,8 +20,8 @@ prototipo-fge/
 │   └── atoms/             Piezas mínimas
 ├── data/                  Simulación de base de datos (futuro CPT / campos SCF)
 ├── pages/                 Una plantilla por página del sitio
-├── docs/                  Estrategia de migración, auditorías y mapa de progreso
-└── *.html                 Mockups HTML originales (solo referencia, ya en desuso)
+└── _proceso/              No funcional: estrategia WP, auditorías, flujo de trabajo
+    └── mockups/           Mockups HTML originales (solo referencia, ya en desuso)
 ```
 
 ## Cómo se construye una página
@@ -59,15 +59,18 @@ Un componente declara en su cabecera su contrato: qué variables recibe, de qué
 - Sintaxis: `php -l <archivo>`. Render: `curl` a la página y revisar el código resultante.
 - El CSS se sirve con versión automática (`style.css?v=<mtime>`); los cambios en estilos invalidan la caché del navegador sin recargas forzadas.
 
-## Documentación en docs/
+## Documentación en _proceso/
+
+No es código del prototipo: es la documentación del proceso (auditorías, decisiones y estrategia) y los mockups de referencia.
 
 - `estrategia-theme-classic-wp.md` — destino WordPress: CPTs, taxonomías, campos y plantillas.
 - `MAPA-MIGRACION.md` — manifiesto vivo: auditoría por página y componente, decisiones registradas con fecha.
 - `informe-auditoria-tokens.md` — auditoría de colores y utilidades fuera de paleta.
 - `propuesta-restructuracion-prototipo.md` — origen de la estructura actual.
+- `flujo-trabajo-ideal.md` — orden de decisiones y fricciones del flujo con las skills (`.opencode/skills/`).
 
 ## Estado
 
-8 páginas completas: home, país (`?pais=`), qué-hacemos, transparencia, alianzas, donación (`?pais=`), noticias (grilla con filtros país/programa) y noticia single (`?id=`). Fuentes de diseño: mockups HTML en la raíz (estructura) + specs del sistema; el MCP de Figma se usó solo para calibrar los tokens tipográficos iniciales y ya no es dependencia (ver skill "Modo sin MCP").
+8 páginas completas: home, país (`?pais=`), qué-hacemos, transparencia, alianzas, donación (`?pais=`), noticias (grilla con filtros país/programa) y noticia single (`?id=`). Fuentes de diseño: mockups HTML en `_proceso/mockups/` (estructura) + specs del sistema; el MCP de Figma se usó solo para calibrar los tokens tipográficos iniciales y ya no es dependencia (ver skill "Modo sin MCP").
 
 La migración a WordPress no comienza hasta validar el prototipo completo. Cuando ocurra, cada pieza ya tiene su traducción definida: moléculas a template parts, `data/` a CPTs con ACF/SCF, y `fge_consulta()` a `WP_Query`.
